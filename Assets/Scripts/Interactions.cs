@@ -6,6 +6,7 @@ public class Interactions : MonoBehaviour {
 
 	public OVRInput.Controller Lcontroller,Rcontroller;
 	public GameObject righthand,threeframe,fourframe;
+	public float RotateSpeed=100f;
 
 	private Quaternion RotStart;
 	private Vector3 PosStart,Rhand;
@@ -14,6 +15,7 @@ public class Interactions : MonoBehaviour {
 	{
 		RotStart = threeframe.transform.localRotation;
 		PosStart = threeframe.transform.localPosition;
+		fourframe.transform.localPosition = PosStart;
 	}
 	// Update is called once per frame
 	void Update ()
@@ -49,6 +51,12 @@ public class Interactions : MonoBehaviour {
 			fourframe.transform.localRotation = RotStart;
 			fourframe.transform.localPosition = PosStart;
 		}
+
+		if (OVRInput.Get (OVRInput.RawButton.B)) {
+			threeframe.transform.Rotate (Vector3.up, RotateSpeed * Time.deltaTime);
+			fourframe.transform.Rotate(Vector3.up, RotateSpeed * Time.deltaTime);
+		}
+
 
 	}
 }
