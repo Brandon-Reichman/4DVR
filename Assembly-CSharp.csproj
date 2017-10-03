@@ -84,14 +84,19 @@
      <Compile Include="Assets\OVR\Scripts\Util\OVRSceneSampleController.cs" />
      <Compile Include="Assets\OVR\Scripts\Util\OVRScreenFade.cs" />
      <Compile Include="Assets\OVR\Scripts\Util\OVRWaitCursor.cs" />
+     <Compile Include="Assets\Scripts\Drawing.cs" />
      <Compile Include="Assets\Scripts\Grab.cs" />
      <Compile Include="Assets\Scripts\Interactions.cs" />
+     <Compile Include="Assets\Scripts\mop.cs" />
+     <Compile Include="Assets\Scripts\Reading.cs" />
+     <Compile Include="Assets\Scripts\Tesseract.cs" />
      <Compile Include="Assets\Scripts\TouchController.cs" />
      <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
      <None Include="Assets\OVR\Shaders\OVRColorRampAlpha.shader" />
      <None Include="Assets\OVR\Shaders\Unlit Crosshair.shader" />
      <None Include="Assets\OVR\Resources\Unlit Transparent Color.shader" />
      <None Include="Assets\OVR\Resources\Underlay Transparent Occluder.shader" />
+     <None Include="Assets\Shaders\VRMOP.shader" />
      <None Include="Assets\OVR\Resources\Underlay Impostor.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
