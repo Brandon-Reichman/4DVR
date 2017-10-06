@@ -3,21 +3,21 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Reading : MonoBehaviour {
 
 	public GameObject mesh;
 
-	private string[] file;
-	private string[] verts;
-	private string[] numbers;
+	private string v,location;
+	private string[] file,verts,numbers;
 	private float[] nums;
 	private int j=0,k=0;
 	// Use this for initialization
 	void Start () 
 	{
-		
-		file = System.IO.File.ReadAllLines (@"C:\Users\breich5\Documents\cube.obj");
+		location = AssetDatabase.GetAssetPath (mesh);
+		file = System.IO.File.ReadAllLines (location);
 		for (int i=0;i<file.Length;i++) {
 			if (file [i].Trim ().StartsWith ("v") && !(file [i].Trim ().StartsWith ("vn"))) {
 				j++;
@@ -28,18 +28,15 @@ public class Reading : MonoBehaviour {
 		nums = new float[j * 4];
 		for (int i=0;i<file.Length;i++) {
 			if (file [i].Trim ().StartsWith ("v") && !(file [i].Trim ().StartsWith ("vn"))) {
-				verts [k] = file [i];
+				verts [k] = file [i].Remove(0,2);
+				verts [k] = verts [k].PadRight (verts [k].Length+1, ' ');
 				k++;
 			}
 		}
-		for (int i = 0; i < verts.Length; i++) {
-			verts [i] = verts [i].Remove (0, 2);
-		}
-
-		//this for loop is supposed to split each component of the vertex
+		v = String.Join ("", verts);
 		for (int i = 0; i < numbers.Length; i++){
-			numbers = verts [i].Split (new char[]{' '});
-			nums[i] = Single.Parse(numbers[i]);;
+		  	numbers = v.Split (new char[]{' '});
+			nums[i] = float.Parse(numbers[i]);
 		}
 
 	}
@@ -47,7 +44,8 @@ public class Reading : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
+		if (Input.GetKeyDown (KeyCode.V)) 
+				Debug.Log (v);
 
 		if (Input.GetKeyDown (KeyCode.P)) {
 			foreach (string line in verts)
