@@ -12,6 +12,7 @@ public class Reading : MonoBehaviour {
 	private Vector4[] vertices;
 	private string v,location;
 	private string[] file,verts;
+	private float[] nums = new float[4];
 	private int j=0,k=0,l=0;
 	// Use this for initialization
 	void Start () 
@@ -36,19 +37,14 @@ public class Reading : MonoBehaviour {
 		}
 		//most absurd loding of vectors possible...
 		for (int i = 0; i < j; i++) {
-			int h = 0;
 			string p = verts[i];
-			float[] ok = new float[4];
 			string[] e = p.Split (new char[]{ ' ' });
 			for (int q = 0; q < 4; q++)
-				ok [q] = float.Parse (e [q]);
-			vertices [i].x = ok [h];
-			vertices [i].y = ok [h+1];
-			vertices [i].z = ok [h+2];
-			vertices [i].w = ok [h+3];
-			h++;
-			if (h > 4)
-				h = 0;
+				nums [q] = float.Parse (e [q]);
+			vertices [i].x = nums [l];
+			vertices [i].y = nums [l+1];
+			vertices [i].z = nums [l+2];
+			vertices [i].w = nums [l+3];
 		}
 		/*v = String.Join ("", verts);
 		numbers = v.Split (new char[]{' '});
