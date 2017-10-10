@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49befaaf988e554a80f806245a71a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 100000, guid: 370bc0b037dae7b4a8d1cb9a9608e786, type: 3}
+  mesh: {fileID: 100000, guid: 439e1f9518992504b952a720c6772879, type: 3}
 --- !u!1 &752534453
 GameObject:
   m_ObjectHideFlags: 0
