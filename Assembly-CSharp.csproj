@@ -92,11 +92,16 @@
      <Compile Include="Assets\Scripts\Tesseract.cs" />
      <Compile Include="Assets\Scripts\TouchController.cs" />
      <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
+     <None Include="Assets\Shaders\FDStandard.shader" />
      <None Include="Assets\OVR\Shaders\OVRColorRampAlpha.shader" />
+     <None Include="Assets\Shaders\FDUnityStandardCoreForward.cginc" />
      <None Include="Assets\OVR\Shaders\Unlit Crosshair.shader" />
      <None Include="Assets\OVR\Resources\Unlit Transparent Color.shader" />
+     <None Include="Assets\Shaders\FDUnityStandardCore.cginc" />
      <None Include="Assets\OVR\Resources\Underlay Transparent Occluder.shader" />
+     <None Include="Assets\Shaders\FDUnityStandardShadow.cginc" />
      <None Include="Assets\Shaders\VRMOP.shader" />
+     <None Include="Assets\Shaders\FDTransform.cginc" />
      <None Include="Assets\OVR\Resources\Underlay Impostor.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

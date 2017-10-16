@@ -11,6 +11,7 @@ public class Reading : MonoBehaviour {
 	public Material material;
 	public OVRInput.Controller controller;
 
+	private float[] tangents;
 	private Vector2[] uv;
 	private Mesh stuff;
 	private GameObject cube;
@@ -30,6 +31,7 @@ public class Reading : MonoBehaviour {
 				j++;
 			}
 		}
+		tangents = new float[j];
 		vertices = new Vector3[j];
 		verts = new string[j];
 		uv = new Vector2[j];
@@ -50,7 +52,7 @@ public class Reading : MonoBehaviour {
 			vertices [i].x = nums [0];
 			vertices [i].y = nums [1];
 			vertices [i].z = nums [2];
-			//vertices [i].w = nums [3];
+			tangents [i] = nums [3];
 		}
 		/*v = String.Join ("", verts);
 		numbers = v.Split (new char[]{' '});

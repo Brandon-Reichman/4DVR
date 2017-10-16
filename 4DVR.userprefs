@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Reading.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\FDStandard.shader">
     <Files>
       <File FileName="Assets\Scripts\Drawing.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Grab.cs" Line="27" Column="3" />
-      <File FileName="Assets\Scripts\Reading.cs" Line="52" Column="4" />
+      <File FileName="Assets\Scripts\Reading.cs" Line="70" Column="101" />
       <File FileName="Assets\Scripts\TouchController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interactions.cs" Line="23" Column="18" />
+      <File FileName="Assets\Scripts\Interactions.cs" Line="1" Column="1" />
+      <File FileName="Assets\Shaders\FDStandard.shader" Line="121" Column="53" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
