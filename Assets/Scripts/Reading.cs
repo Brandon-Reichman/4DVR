@@ -9,6 +9,7 @@ public class Reading : MonoBehaviour {
 
 	public GameObject mesh;
 	public Material material;
+	public OVRInput.Controller controller;
 
 	private Vector2[] uv;
 	private Mesh stuff;
@@ -60,18 +61,22 @@ public class Reading : MonoBehaviour {
 			uv [i] = new Vector2 (vertices [i].x, vertices [i].z);
 		}
 
-
+		Vector3 pos = new Vector3 (0, 0, 1);
 		stuff = new Mesh ();
 		cube=new GameObject("drawn cube");
-		int[] triangles=new int[] {1,0,3,1,2,3,1,5,2,1,6,2,0,3,7,0,4,7,1,5,0,1,4,0,5,6,7,5,4,7,2,6,3,2,7,3};
+		//int[] triangles=new int[] {1,0,3,1,2,3,1,5,2,1,6,2,0,3,7,0,4,7,1,5,0,1,4,0,5,6,7,5,4,7,2,6,3,2,7,3};
+		int[] triangles=new int[] {0,1,3,3,1,2,4,0,3,4,3,7,3,6,7,2,6,3,5,6,2,2,1,5,4,7,6,6,5,4,0,4,1,1,4,5};
+		//int[] triangles=new int[]   {3,1,0,2,1,3,3,0,4,7,3,4,7,6,3,3,6,2,2,6,5,5,1,2,6,7,4,4,5,6,1,4,0,5,4,1};
 		cube.transform.gameObject.AddComponent<MeshRenderer> ();
 		cube.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
+		//cube.AddComponent (Type.GetType("TouchController"));
 		cube.GetComponent<MeshRenderer> ().material = material;
+		cube.transform.localPosition = new Vector3 (0, 0, 1);
 		stuff.vertices = vertices;
 		stuff.triangles = triangles;
 		stuff.uv = uv;
-		stuff.RecalculateNormals ();
-		cube.transform.gameObject.GetComponent<MeshFilter> ().mesh = stuff;
+		stuff.RecalculateNormals();
+		//cube.transform.gameObject.GetComponent<MeshFilter> ().mesh = stuff;
 		//Instantiate (cube);
 
 
@@ -82,6 +87,11 @@ public class Reading : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		/*Quaternion rot = OVRInput.GetLocalControllerRotation (controller);
+		Vector3 pose = OVRInput.GetLocalControllerPosition (controller);
+		cube.transform.localPosition = pose;
+		cube.transform.localRotation = rot;*/
+
 		if (Input.GetKeyDown (KeyCode.P)) {
 			foreach (string line in verts)
 				Debug.Log (line);
