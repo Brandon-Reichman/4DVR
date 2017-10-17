@@ -86,6 +86,7 @@
      <Compile Include="Assets\OVR\Scripts\Util\OVRWaitCursor.cs" />
      <Compile Include="Assets\Scripts\Drawing.cs" />
      <Compile Include="Assets\Scripts\Grab.cs" />
+     <Compile Include="Assets\Scripts\InitFDTransform.cs" />
      <Compile Include="Assets\Scripts\Interactions.cs" />
      <Compile Include="Assets\Scripts\mop.cs" />
      <Compile Include="Assets\Scripts\Reading.cs" />

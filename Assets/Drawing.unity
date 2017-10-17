@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 23034485}
   - component: {fileID: 23034486}
   - component: {fileID: 23034487}
+  - component: {fileID: 23034489}
   m_Layer: 0
   m_Name: Runner
   m_TagString: Untagged
@@ -161,9 +162,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49befaaf988e554a80f806245a71a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 100000, guid: ea49d7130cd192b4db15d6202783562a, type: 3}
+  mesh: {fileID: 100000, guid: 4ce7e35e536a95f4e8601be7fe77fe7a, type: 3}
   material: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
   controller: 1
+--- !u!114 &23034489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23034484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e933e81d3c20c74ea6fdc708a67e3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  queueAhead: 1
+  useRecommendedMSAALevel: 0
+  enableAdaptiveResolution: 0
+  maxRenderScale: 1
+  minRenderScale: 0.7
+  _trackingOriginType: 0
+  usePositionTracking: 1
+  useIPDInPositionTracking: 1
+  resetTrackerOnLoad: 0
 --- !u!1 &752534453
 GameObject:
   m_ObjectHideFlags: 0
