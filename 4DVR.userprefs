@@ -4,10 +4,10 @@
     <Files>
       <File FileName="Assets\Scripts\Drawing.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Grab.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Reading.cs" Line="62" Column="1" />
+      <File FileName="Assets\Scripts\Reading.cs" Line="74" Column="54" />
+      <File FileName="Assets\Scripts\InitFDTransform.cs" Line="17" Column="59" />
       <File FileName="Assets\Scripts\TouchController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interactions.cs" Line="44" Column="40" />
-      <File FileName="Assets\Scripts\InitFDTransform.cs" Line="19" Column="64" />
+      <File FileName="Assets\Scripts\Interactions.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
