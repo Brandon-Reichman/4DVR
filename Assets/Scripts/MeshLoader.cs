@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Reading : MonoBehaviour {
+public class MeshLoader : MonoBehaviour {
 
 	public GameObject mesh;
 	public Material material;
@@ -71,7 +71,7 @@ public class Reading : MonoBehaviour {
 		//cube.AddComponent (Type.GetType("TouchController"));
 		cube.AddComponent(Type.GetType("InitFDTransform"));
 		cube.GetComponent<MeshRenderer> ().material = material;
-		cube.transform.localPosition = new Vector3 (0, 0, 3);
+		cube.transform.localPosition = new Vector3 (0, 0, 2);
 		stuff.vertices = vertices;
 		stuff.triangles = triangles;
 		//stuff.uv = uv;

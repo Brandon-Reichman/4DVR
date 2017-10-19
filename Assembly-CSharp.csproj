@@ -88,8 +88,8 @@
      <Compile Include="Assets\Scripts\Grab.cs" />
      <Compile Include="Assets\Scripts\InitFDTransform.cs" />
      <Compile Include="Assets\Scripts\Interactions.cs" />
+     <Compile Include="Assets\Scripts\MeshLoader.cs" />
      <Compile Include="Assets\Scripts\mop.cs" />
-     <Compile Include="Assets\Scripts\Reading.cs" />
      <Compile Include="Assets\Scripts\Tesseract.cs" />
      <Compile Include="Assets\Scripts\TouchController.cs" />
      <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
