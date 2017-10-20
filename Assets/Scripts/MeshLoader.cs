@@ -43,11 +43,11 @@ public class MeshLoader : MonoBehaviour {
 				k++;
 			}
 		}
-		//most absurd loding of vectors possible...
+		//loading vectors
 		for (int i = 0; i < j; i++) {
 			string p = verts[i];
 			string[] e = p.Split (new char[]{ ' ' });
-			for (int q = 0; q < 3; q++)
+			for (int q = 0; q < 4; q++)
 				nums [q] = float.Parse (e [q]);
 			vertices [i].x = nums [0];
 			vertices [i].y = nums [1];
@@ -55,51 +55,27 @@ public class MeshLoader : MonoBehaviour {
 			tangents [i].x = nums [3];
 			uv [i] = new Vector2 (vertices [i].x, vertices [i].z);
 		}
-		/*v = String.Join ("", verts);
-		numbers = v.Split (new char[]{' '});
-		for (int i = 0; i < numbers.Length; i++)
-			nums[i] = float.Parse(numbers[i]);*/
 
 
-		Vector3 pos = new Vector3 (0, 0, 1);
+		Vector3 pos = new Vector3 (0, 0, 2);
 		stuff = new Mesh ();
 		cube=new GameObject("drawn cube");
-		int[] triangles=new int[] {0,1,3,3,1,2,4,0,3,4,3,7,3,6,7,2,6,3,5,6,2,2,1,5,4,7,6,6,5,4,0,4,1,1,4,5,8,9,11};
-		//int[] triangles=new int[]   {3,1,0,2,1,3,3,0,4,7,3,4,7,6,3,3,6,2,2,6,5,5,1,2,6,7,4,4,5,6,1,4,0,5,4,1};
+		int[] triangles=new int[] {0,1,3,3,1,2,4,0,3,4,3,7,3,6,7,2,6,3,5,6,2,2,1,5,4,7,6,6,5,4,0,4,1,1,4,5
+			,8,9,11,11,9,10,12,8,11,12,11,15,11,14,15,10,14,11,13,14,10,10,9,13,12,15,14,14,13,12,8,12,9,9,12,13,
+			2,1,9,9,10,2,10,11,2,2,11,3,0,3,11,11,8,0,1,0,8,8,9,1,
+			5,13,9,5,9,1,2,10,6,6,10,14,6,14,13,13,5,6,
+			6,14,7,7,14,15,15,12,7,7,12,4,4,12,13,13,5,4,
+			0,8,12,12,4,0,7,15,3,3,15,11
+		};
 		cube.transform.gameObject.AddComponent<MeshRenderer> ();
 		cube.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
-		//cube.AddComponent (Type.GetType("TouchController"));
 		cube.AddComponent(Type.GetType("InitFDTransform"));
 		cube.GetComponent<MeshRenderer> ().material = material;
-		cube.transform.localPosition = new Vector3 (0, 0, 2);
+		cube.transform.localPosition = pos;
 		stuff.vertices = vertices;
 		stuff.triangles = triangles;
-		//stuff.uv = uv;
-		stuff.tangents = tangents;
+		stuff.uv = uv;
 		stuff.RecalculateNormals();
-		//cube.transform.gameObject.GetComponent<MeshFilter> ().mesh = stuff;
-		//Instantiate (cube);
-
-
-	
-
+		stuff.tangents = tangents;
 		}
-
-	// Update is called once per frame
-	void Update () 
-	{
-		/*Quaternion rot = OVRInput.GetLocalControllerRotation (controller);
-		Vector3 pose = OVRInput.GetLocalControllerPosition (controller);
-		cube.transform.localPosition = pose;
-		cube.transform.localRotation = rot;*/
-
-		if (Input.GetKeyDown (KeyCode.P)) {
-			foreach (string line in verts)
-				Debug.Log (line);
-		}
-		if (Input.GetKeyDown (KeyCode.F)) {
-			foreach (Vector4 v in vertices)
-				Debug.Log (v);
-		}
-	}
 }
