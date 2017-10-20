@@ -9,7 +9,8 @@
 
 	// To project back to 3-space, we want to "drop" the w coordinate, i.e.
 	// set it back to 1.0 which is ignored by Unity (but required to be there).
-	v.vertex.w = 1.0;
+
+	v.vertex.w = 0.0;
 
   	return v;
 }
