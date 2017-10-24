@@ -230,12 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ab8ab32cee7144680b132772f2da59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: 2
-  grabRadius: 1
-  grabMask:
-    serializedVersion: 2
-    m_Bits: 256
-  sphere: {fileID: 1713396421}
 --- !u!54 &155829504
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -360,6 +354,7 @@ GameObject:
   - component: {fileID: 413145491}
   - component: {fileID: 413145492}
   - component: {fileID: 413145493}
+  - component: {fileID: 413145494}
   m_Layer: 0
   m_Name: Runner
   m_TagString: Untagged
@@ -386,7 +381,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 413145490}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0666b3166c6eb1a48b3ebd88c0073551, type: 3}
   m_Name: 
@@ -408,6 +403,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882a02510c12124459026a6ab18eb3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &413145494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 413145490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49befaaf988e554a80f806245a71a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 100000, guid: b8acf09f31c32bc46a33dbfce55ada84, type: 3}
+  material: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
 --- !u!1 &506118945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,7 +1143,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 7b23ec9efb719414a8a3834e61b89844, type: 2}
     - target: {fileID: 100000, guid: 4025e644d501e214fb8ba6905f29accc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 4025e644d501e214fb8ba6905f29accc, type: 3}
       propertyPath: m_Name

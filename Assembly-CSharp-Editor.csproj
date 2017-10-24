@@ -66,7 +66,7 @@
      <None Include="Assets\Shaders\FDUnityStandardCore.cginc" />
      <None Include="Assets\OVR\Resources\Underlay Transparent Occluder.shader" />
      <None Include="Assets\Shaders\Stereographic\StereographicUnityStandardCoreForward.cginc" />
-     <None Include="Assets\Shaders\Stereographic\StereographicStandard.shader" />
+     <None Include="Assets\Shaders\StereographicStandard.shader" />
      <None Include="Assets\Shaders\FDUnityStandardShadow.cginc" />
      <None Include="Assets\Shaders\Stereographic\StereographicUnityStandardCore.cginc" />
      <None Include="Assets\Shaders\FDTransform.cginc" />

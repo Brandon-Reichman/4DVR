@@ -118,6 +118,8 @@ GameObject:
   - component: {fileID: 23034485}
   - component: {fileID: 23034487}
   - component: {fileID: 23034489}
+  - component: {fileID: 23034488}
+  - component: {fileID: 23034486}
   m_Layer: 0
   m_Name: Runner
   m_TagString: Untagged
@@ -138,6 +140,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &23034486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23034484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a676e8d244d6c145a937d1bd6c39469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 100002, guid: d4ce46fd661fe464f91cfa46951b5b40, type: 3}
 --- !u!114 &23034487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +165,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesh: {fileID: 100000, guid: b8acf09f31c32bc46a33dbfce55ada84, type: 3}
   material: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
-  controller: 1
+--- !u!114 &23034488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 23034484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f68bb59c4318a674eb82a0add3046951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &23034489
 MonoBehaviour:
   m_ObjectHideFlags: 0

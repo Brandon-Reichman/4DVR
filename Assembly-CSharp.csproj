@@ -88,6 +88,7 @@
      <Compile Include="Assets\Scripts\Interactions.cs" />
      <Compile Include="Assets\Scripts\MeshLoader.cs" />
      <Compile Include="Assets\Scripts\TouchController.cs" />
+     <Compile Include="Assets\Scripts\Triangulator.cs" />
      <None Include="Assets\Shaders\Stereographic\StereographicUnityStandardShadow.cginc" />
      <None Include="Assets\OVR\Editor\AndroidManifest.OVRSubmission.xml" />
      <None Include="Assets\Shaders\FDStandard.shader" />
@@ -99,7 +100,7 @@
      <None Include="Assets\Shaders\FDUnityStandardCore.cginc" />
      <None Include="Assets\OVR\Resources\Underlay Transparent Occluder.shader" />
      <None Include="Assets\Shaders\Stereographic\StereographicUnityStandardCoreForward.cginc" />
-     <None Include="Assets\Shaders\Stereographic\StereographicStandard.shader" />
+     <None Include="Assets\Shaders\StereographicStandard.shader" />
      <None Include="Assets\Shaders\FDUnityStandardShadow.cginc" />
      <None Include="Assets\Shaders\Stereographic\StereographicUnityStandardCore.cginc" />
      <None Include="Assets\Shaders\FDTransform.cginc" />
