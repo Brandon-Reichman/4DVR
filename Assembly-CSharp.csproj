@@ -87,6 +87,7 @@
      <Compile Include="Assets\Scripts\InitFDTransform.cs" />
      <Compile Include="Assets\Scripts\Interactions.cs" />
      <Compile Include="Assets\Scripts\MeshLoader.cs" />
+     <Compile Include="Assets\Scripts\TetrahedronMesh.cs" />
      <Compile Include="Assets\Scripts\TouchController.cs" />
      <Compile Include="Assets\Scripts\Triangulator.cs" />
      <None Include="Assets\Shaders\Stereographic\StereographicUnityStandardShadow.cginc" />

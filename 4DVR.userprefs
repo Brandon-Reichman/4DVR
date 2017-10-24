@@ -1,8 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MeshLoader.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TetrahedronMesh.cs">
     <Files>
-      <File FileName="Assets\Scripts\MeshLoader.cs" Line="36" Column="29" />
+      <File FileName="Assets\Scripts\MeshLoader.cs" Line="68" Column="37" />
+      <File FileName="Assets\Scripts\TetrahedronMesh.cs" Line="71" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
