@@ -111,7 +111,7 @@ public class InitFDTransform : MonoBehaviour {
 			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", M);
 			}
 
-		if (OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&OVRInput.Get (OVRInput.RawButton.LHandTrigger)) {
+		/*if (OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&OVRInput.Get (OVRInput.RawButton.LHandTrigger)) {
 			M=new Matrix4x4(
 				new Vector4(Mathf.Cos(Time.time),0,0,Mathf.Sin(Time.time)),
 				new Vector4(0,Mathf.Cos(Time.time),0,(-1)*Mathf.Sin(Time.time)),
@@ -128,6 +128,6 @@ public class InitFDTransform : MonoBehaviour {
 				new Vector4((-1)*Mathf.Sin(Time.time),Mathf.Sin(Time.time),0,Mathf.Cos(Time.time)*Mathf.Cos(Time.time))
 			);
 			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", M);
-		}
+		}*/
 	}
 }   
