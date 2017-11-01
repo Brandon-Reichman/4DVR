@@ -14,14 +14,15 @@ public class Triangulator : MonoBehaviour {
 	private float[] nums=new float[4];
 	private string location;
 	private int j,k;
-	private List<int> triangles;
+	private List<int[]> triangles;
+	private List<int> verts;
+	private List<int[]> L;
 
 	List<int> ParseFaceLine(string faceline)
 	{
-		List<int> verts;
 		faceline = faceline.Remove (0, 1).Trim();
 		foreach (string s in faceline.Split (' ')) {
-			verts.Add(int.Parse(s.Split ("/") [0]));//TODO inefficient
+			verts.Add(int.Parse(s));//TODO inefficient
 
 		}
 		return verts;
@@ -35,7 +36,6 @@ public class Triangulator : MonoBehaviour {
 		// Input 1 2 3 4 5
 		// Ouput { 1 2 3, 1 3 4, 1 4 5 }
 
-		List<int[]> L;
 		int v0 = verts [0];
 		int v1 = verts [1];
 		foreach (int v2 in verts.Skip(2))
@@ -55,7 +55,6 @@ public class Triangulator : MonoBehaviour {
 	void Start () 
 	{
 		string[] lines;
-		//List<int[]> triangles;
 
 		location = AssetDatabase.GetAssetPath (mesh);
 		lines = System.IO.File.ReadAllLines (location);
@@ -63,7 +62,8 @@ public class Triangulator : MonoBehaviour {
 		foreach (string s in lines) {
 			if (isFaceLine(s)) {
 				List<int> faceverts = ParseFaceLine(s);
-				triangles.AddRange (Triangulate (faceverts));
+				List<int[]> T=Triangulate(faceverts);
+				triangles.AddRange(T);
 			}
 		}
 	}
