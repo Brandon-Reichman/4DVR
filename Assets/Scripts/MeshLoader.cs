@@ -76,7 +76,7 @@ public class MeshLoader : MonoBehaviour {
 		stuff.vertices = vertices;
 		stuff.triangles = triangles;
 		stuff.uv = uv;
-		//stuff.RecalculateNormals();
+		stuff.RecalculateNormals();
 		stuff.tangents = tangents;
 		}
 
