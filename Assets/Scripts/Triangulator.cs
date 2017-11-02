@@ -21,34 +21,38 @@ public class Triangulator : MonoBehaviour {
 	List<int> ParseFaceLine(string faceline)
 	{
 		faceline = faceline.Remove (0, 1).Trim();
-		foreach (string s in faceline.Split (' ')) {
-			verts.Add(int.Parse(s));//TODO inefficient
-
+		foreach (string s in faceline.Split(' ')) {
+			Debug.Log (s);
+			int b = int.Parse (s);
+			Debug.Log (b);
+			//verts.AddRange (int.Parse(s));
 		}
+		//Debug.Log("Verts: "+verts);
 		return verts;
 		// Input "f 1//3 2//4 5//7"
 		// Ouput {1, 2, 5}
 
 	}
 
-	List<int[]> Triangulate(List<int> verts)
+	List<int[]> Triangulate(List<int> vert)
 	{
 		// Input 1 2 3 4 5
 		// Ouput { 1 2 3, 1 3 4, 1 4 5 }
 
-		int v0 = verts [0];
-		int v1 = verts [1];
-		foreach (int v2 in verts.Skip(2))
+		int v0 = vert[0];
+		int v1 = vert [1];
+		foreach (int v2 in vert.Skip(2))
 		{
 			L.Add( new int[] {v0,v1,v2} );
 		}
 		// Todo: make sure this works if Length of verts is 3.
+		Debug.Log("Triangles: "+L);
 		return(L);
 	}
 
 	bool isFaceLine(string s)
 	{
-		return s.StartsWith("f ");
+		return s.Trim().StartsWith("f ");
 	}
 
 	// Use this for initialization
@@ -62,8 +66,9 @@ public class Triangulator : MonoBehaviour {
 		foreach (string s in lines) {
 			if (isFaceLine(s)) {
 				List<int> faceverts = ParseFaceLine(s);
-				List<int[]> T=Triangulate(faceverts);
-				triangles.AddRange(T);
+				//Debug.Log (faceverts);
+				//List<int[]> T=Triangulate(faceverts);
+				//triangles.AddRange (T);
 			}
 		}
 	}
@@ -71,8 +76,10 @@ public class Triangulator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (Input.GetKey (KeyCode.P)) {
+		}
 		if (Input.GetKey (KeyCode.O)) {
-				Debug.Log (triangles);
+			triangles.ForEach (Console.WriteLine);
 		}
 	}
 }
