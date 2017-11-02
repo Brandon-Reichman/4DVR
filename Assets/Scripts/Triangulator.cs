@@ -15,39 +15,42 @@ public class Triangulator : MonoBehaviour {
 	private string location;
 	private int j,k;
 	private List<int[]> triangles;
-	private List<int> verts;
-	private List<int[]> L;
 
 	List<int> ParseFaceLine(string faceline)
 	{
-		faceline = faceline.Remove (0, 1).Trim();
-		foreach (string s in faceline.Split(' ')) {
-			Debug.Log (s);
-			int b = int.Parse (s);
-			Debug.Log (b);
-			//verts.AddRange (int.Parse(s));
-		}
-		//Debug.Log("Verts: "+verts);
-		return verts;
-		// Input "f 1//3 2//4 5//7"
-		// Ouput {1, 2, 5}
+		// Input "f 1//2 3//4 5//6"
+		// Output {1,3,5}
 
+		List<int> verts = new List<int> ();
+		// Split the line on spaces to get fields, and drop the first one.
+		foreach (string field in faceline.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).Skip(1)) {
+			// Each field consists of slash-separated ints.
+			// The first one is the index of the vertex to use.
+			// Extract that and ignore the rest.
+			int idx = int.Parse(field.Split('/')[0]);
+			verts.Add (idx);
+		}
+		Debug.Log ("Parsed vertex line to: " + string.Join (", ", verts.Select (i => i.ToString ()).ToArray ()));
+		return verts;
 	}
 
-	List<int[]> Triangulate(List<int> vert)
+	List<int[]> Triangulate(List<int> verts)
 	{
-		// Input 1 2 3 4 5
-		// Ouput { 1 2 3, 1 3 4, 1 4 5 }
+		// Input { 1, 2, 3, 4, 5 }
+		// Ouput { {1,2,3}, {1,3,4}, {1,4,5} }
 
-		int v0 = vert[0];
-		int v1 = vert [1];
-		foreach (int v2 in vert.Skip(2))
-		{
-			L.Add( new int[] {v0,v1,v2} );
+		// TODO: Throw an exception if verts too short
+		List<int[]> tris = new List<int[]> ();
+		for (int i = 2; i < verts.Count; i++) {
+			tris.Add (new int[] { verts [0], verts [i - 1], verts [i] });
 		}
-		// Todo: make sure this works if Length of verts is 3.
-		Debug.Log("Triangles: "+L);
-		return(L);
+		// TODO: change to a more readable way of making a string like 1,2,3,4 -> {1,2,3},{1,3,4}
+	    Debug.Log(
+			string.Join (", ", verts.Select (i => i.ToString ()).ToArray ())
+			+ " -> "
+			+ string.Join(", ", tris.Select (t => "{" + string.Join(", ",t.Select(i => i.ToString ()).ToArray()) + "}").ToArray())
+		);
+		return tris;
 	}
 
 	bool isFaceLine(string s)
@@ -63,12 +66,12 @@ public class Triangulator : MonoBehaviour {
 		location = AssetDatabase.GetAssetPath (mesh);
 		lines = System.IO.File.ReadAllLines (location);
 
+		triangles = new List<int[]> ();
 		foreach (string s in lines) {
 			if (isFaceLine(s)) {
 				List<int> faceverts = ParseFaceLine(s);
-				//Debug.Log (faceverts);
-				//List<int[]> T=Triangulate(faceverts);
-				//triangles.AddRange (T);
+				List<int[]> T=Triangulate(faceverts);
+				triangles.AddRange (T);
 			}
 		}
 	}
