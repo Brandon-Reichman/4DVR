@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a676e8d244d6c145a937d1bd6c39469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mat: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
   mesh: {fileID: 100002, guid: b91eb4c69f31dd64a80ae344ad89fd78, type: 3}
 --- !u!114 &23034487
 MonoBehaviour:
@@ -163,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49befaaf988e554a80f806245a71a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 100002, guid: 02f5e9fb2758c4b4d9be4b9df1cfa455, type: 3}
+  mesh: {fileID: 100002, guid: b91eb4c69f31dd64a80ae344ad89fd78, type: 3}
   material: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
 --- !u!114 &23034489
 MonoBehaviour:
@@ -196,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be897de5d49e96f41b7afeda3c26f8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 100002, guid: a8642b1e8f6ba3e4099f6a039ff0e520, type: 3}
+  mesh: {fileID: 100002, guid: c36165f72c848904f9a98b5cbaebbe71, type: 3}
   material: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
 --- !u!1 &467612209 stripped
 GameObject:
