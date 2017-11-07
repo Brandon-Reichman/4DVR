@@ -74,7 +74,7 @@ public class MeshLoader : MonoBehaviour {
 		cube.GetComponent<MeshRenderer> ().material = material;
 		cube.transform.localPosition = pos;
 		stuff.vertices = vertices;
-		//stuff.triangles = triangles;
+		stuff.triangles = triangles;
 		stuff.uv = uv;
 		stuff.RecalculateNormals();
 		stuff.tangents = tangents;

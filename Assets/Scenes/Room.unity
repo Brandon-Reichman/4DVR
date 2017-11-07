@@ -230,12 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ab8ab32cee7144680b132772f2da59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: 2
-  grabRadius: 1
-  grabMask:
-    serializedVersion: 2
-    m_Bits: 256
-  sphere: {fileID: 1713396421}
 --- !u!54 &155829504
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -800,7 +794,7 @@ Prefab:
     - target: {fileID: 2300000, guid: 555ed69e9465f1d48a6e93b5bf99b1d1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
+      objectReference: {fileID: 2100000, guid: db93549e4227b284fa980ef671ac41a0, type: 2}
     - target: {fileID: 400000, guid: 555ed69e9465f1d48a6e93b5bf99b1d1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.35
@@ -1120,7 +1114,7 @@ Prefab:
     - target: {fileID: 2300000, guid: 4025e644d501e214fb8ba6905f29accc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 7aaa86066b9e2d44cb184641b0ccbc77, type: 2}
+      objectReference: {fileID: 2100000, guid: db93549e4227b284fa980ef671ac41a0, type: 2}
     - target: {fileID: 100000, guid: 4025e644d501e214fb8ba6905f29accc, type: 3}
       propertyPath: m_IsActive
       value: 1
