@@ -8,7 +8,7 @@ using System.Linq;
 
 public class Triangulator : MonoBehaviour {
 
-	public Material mat;
+	public Material Projection;
 	public GameObject mesh;
 	private float[] nums=new float[4];
 	private string location;
@@ -53,14 +53,14 @@ public class Triangulator : MonoBehaviour {
 		List<int[]> tris = new List<int[]> ();
 		for (int i = 2; i < verts.Count; i++) {
 			tris.Add (new int[] { verts [0], verts [i - 1], verts [i] });
-			Debug.Log (verts [0] + " " + verts [i - 1] + " " + verts [i]);
+			//Debug.Log (verts [0] + " " + verts [i - 1] + " " + verts [i]);
 		}
 		// TODO: change to a more readable way of making a string like 1,2,3,4 -> {1,2,3},{1,3,4}
-	    Debug.Log(
+	   /* Debug.Log(
 			string.Join (", ", verts.Select (i => i.ToString ()).ToArray ())
 			+ " -> "
 			+ string.Join(", ", tris.Select (t => "{" + string.Join(", ",t.Select(i => i.ToString ()).ToArray()) + "}").ToArray())
-		);
+		);*/
 		return tris;
 	}
 
@@ -113,7 +113,8 @@ public class Triangulator : MonoBehaviour {
 		GameObject cube = new GameObject ("Drawn Object");
 		cube.transform.gameObject.AddComponent<MeshRenderer> ();
 		cube.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
-		cube.AddComponent (Type.GetType ("InitFDTransform"));
+		//cube.AddComponent (Type.GetType ("InitFDTransform"));
+		cube.AddComponent (Type.GetType ("Controls"));
 		cube.GetComponent<MeshRenderer> ().material = m;
 		cube.transform.localPosition = new Vector3 (0, -0.25f, 2);
 		stuff.vertices = v;
@@ -142,7 +143,7 @@ public class Triangulator : MonoBehaviour {
 				vertices.Add(V);
 			}
 		}
-		DrawObject (mat, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
+		DrawObject (Projection, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
 			}
 			
 	// Update is called once per frame
