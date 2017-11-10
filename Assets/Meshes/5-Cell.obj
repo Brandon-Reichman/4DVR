@@ -3,7 +3,7 @@
 mtllib cube.mtl
 o Cube_Cube.002
 
-
+#Simplex OBJ
 v .2 .2 .2 .2
 v -.2 -.2 .2 .2
 v -.2 .2 -.2 .2

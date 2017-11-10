@@ -31,28 +31,34 @@ public class Controls : MonoBehaviour {
 		}
 		eulerR = OVRInput.GetLocalControllerRotation (RightHand).eulerAngles;
 		eulerL = OVRInput.GetLocalControllerRotation (LeftHand).eulerAngles;
+		eulerR.x = eulerR.x * (Mathf.PI / 180);
+		eulerR.y = eulerR.y * (Mathf.PI / 180);
+		eulerR.z = eulerR.z * (Mathf.PI / 180);
+		eulerL.x = eulerL.x * (Mathf.PI / 180);
+		eulerL.y = eulerL.y * (Mathf.PI / 180);
+		eulerL.z = eulerL.z * (Mathf.PI / 180);
 		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger)||OVRInput.Get (OVRInput.RawButton.LHandTrigger))&&XYZW==true) {
 			Matrix4x4 XY = new Matrix4x4 (
-				              new Vector4 (Mathf.Cos (-eulerR.z / 100), (-1) * Mathf.Sin (-eulerR.z / 100), 0f, 0f),
-				              new Vector4 (Mathf.Sin (-eulerR.z / 100), Mathf.Cos (-eulerR.z / 100), 0f, 0f),
-				              new Vector4 (0f, 0f, Mathf.Cos (-eulerL.z / 100), (-1) * Mathf.Sin (-eulerL.z / 100)),
-				              new Vector4 (0f, 0f, Mathf.Sin (-eulerL.z / 100), Mathf.Cos (-eulerL.z / 100)));
+				              new Vector4 (Mathf.Cos (eulerR.z), (-1) * Mathf.Sin (eulerR.z), 0f, 0f),
+				              new Vector4 (Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0f, 0f),
+				              new Vector4 (0f, 0f, Mathf.Cos (eulerL.z), (-1) * Mathf.Sin (eulerL.z)),
+				              new Vector4 (0f, 0f, Mathf.Sin (eulerL.z), Mathf.Cos (eulerL.z)));
 			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", XY);
 		}
 		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger)||OVRInput.Get (OVRInput.RawButton.LHandTrigger))&&YZXW==true) {
 			Matrix4x4 YZ = new Matrix4x4 (
-				new Vector4 (Mathf.Cos (-eulerL.x / 100), 0, 0, Mathf.Sin (-eulerL.x / 100)),
-				new Vector4 (0, Mathf.Cos (-eulerR.x / 100), Mathf.Sin (-eulerR.x / 100), 0),
-				new Vector4 (0, (-1) * Mathf.Sin (-eulerR.x / 100), Mathf.Cos (-eulerR.x / 100), 0),
-				new Vector4 ((-1) * Mathf.Sin (-eulerL.x / 100), 0, 0, Mathf.Cos (-eulerL.x / 100)));
+				new Vector4 (Mathf.Cos (eulerL.x), 0, 0, Mathf.Sin (eulerL.x)),
+				new Vector4 (0, Mathf.Cos (eulerR.x), Mathf.Sin (eulerR.x), 0),
+				new Vector4 (0, (-1) * Mathf.Sin (eulerR.x), Mathf.Cos (eulerR.x), 0),
+				new Vector4 ((-1) * Mathf.Sin (eulerL.x), 0, 0, Mathf.Cos (eulerL.x)));
 			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", YZ);
 		}
 		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger) || OVRInput.Get (OVRInput.RawButton.LHandTrigger)) && XZYW == true) {
 			Matrix4x4 XZ = new Matrix4x4 (
-				new Vector4 (Mathf.Cos (-eulerR.y/100), 0, (-1) * Mathf.Sin (-eulerR.y/100), 0),
-				new Vector4 (0, Mathf.Cos (-eulerL.y/100), 0, (-1) * Mathf.Sin (-eulerL.y/100)),
-				new Vector4 (Mathf.Sin (-eulerR.y/100), 0, Mathf.Cos (-eulerR.y/100), 0),
-				new Vector4 (0, Mathf.Sin (-eulerL.y/100), 0, Mathf.Cos (-eulerL.y/100))
+				new Vector4 (Mathf.Cos (eulerR.y), 0, (-1) * Mathf.Sin (eulerR.y), 0),
+				new Vector4 (0, Mathf.Cos (eulerL.y), 0, (-1) * Mathf.Sin (eulerL.y)),
+				new Vector4 (Mathf.Sin (eulerR.y), 0, Mathf.Cos (eulerR.y), 0),
+				new Vector4 (0, Mathf.Sin (eulerL.y), 0, Mathf.Cos (eulerL.y))
 			);
 			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", XZ);
 		}

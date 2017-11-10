@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Projection: {fileID: 2100000, guid: 98698304f9de23f4288364887211a564, type: 2}
-  mesh: {fileID: 100002, guid: 4c53c918bf23b094fba35dc3b16ef428, type: 3}
+  mesh: {fileID: 100000, guid: 5a5c55d4b315b2f4ca33e2b083bd755e, type: 3}
 --- !u!114 &23034489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,7 +945,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1915664246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.16093256, y: -0.59030664, z: 1.4105499}
+  m_LocalPosition: {x: -0.16093256, y: 0.04, z: 1.4105499}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1935754378}

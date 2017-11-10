@@ -66,7 +66,7 @@ public class Triangulator : MonoBehaviour {
 
 	bool isVertLine(string s)
 	{
-		if (s.Trim ().StartsWith ("v") && !(s.Trim ().StartsWith ("vn")))
+		if (s.Trim ().StartsWith ("v") && !(s.Trim ().StartsWith ("vn")) && !(s.Trim ().StartsWith ("vt")))
 			return s.Trim ().StartsWith ("v");
 		else
 			return false;
@@ -96,6 +96,7 @@ public class Triangulator : MonoBehaviour {
 				ver [i].x=V [i] [0];
 				ver [i].y=V [i] [1];
 				ver [i].z=V [i] [2];
+			//Debug.Log (ver [i].x + " " + ver [i].y + " " + ver [i].z);
 			}
 		return ver;
 	}
@@ -140,6 +141,8 @@ public class Triangulator : MonoBehaviour {
 			}
 			if (isVertLine (s)) {
 				float[] V=ParseVertexLine (s);
+				foreach (float f in V)
+					Debug.Log (f);
 				vertices.Add(V);
 			}
 		}
