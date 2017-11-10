@@ -66,10 +66,10 @@ public class Triangulator : MonoBehaviour {
 
 	bool isVertLine(string s)
 	{
-		if (s.Trim ().StartsWith ("v") && !(s.Trim ().StartsWith ("vn")) && !(s.Trim ().StartsWith ("vt")))
-			return s.Trim ().StartsWith ("v");
-		else
-			return false;
+		//if (s.Trim ().StartsWith ("v ") /*&& !(s.Trim ().StartsWith ("vn")) && !(s.Trim ().StartsWith ("vt")))*/)
+			return s.Trim ().StartsWith ("v ");
+		/*else
+			return false;*/
 	}
 
 	bool isFaceLine(string s)
@@ -141,8 +141,6 @@ public class Triangulator : MonoBehaviour {
 			}
 			if (isVertLine (s)) {
 				float[] V=ParseVertexLine (s);
-				foreach (float f in V)
-					Debug.Log (f);
 				vertices.Add(V);
 			}
 		}
