@@ -8,10 +8,11 @@ using System.Linq;
 
 public class Triangulator : MonoBehaviour {
 
-	public Material Projection;
+	public Material Stereographic,Orthographic;
 	public GameObject mesh;
 	private float[] nums=new float[4];
 	private string location;
+	private GameObject OBJ;
 
 	List<int> ParseFaceLine(string faceline)
 	{
@@ -34,6 +35,8 @@ public class Triangulator : MonoBehaviour {
 	float[] ParseVertexLine(string vertexline)
 	{
 		List<float> coords = new List<float> ();
+		vertexline = vertexline.PadRight (vertexline.Length + 1, ' ');
+		vertexline = vertexline.PadRight (vertexline.Length + 1, '0');
 		//Debug.Log ("parsing vertex line: "+vertexline);
 		foreach(string field in vertexline.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).Skip(1)){
 			//Debug.Log (field);
@@ -66,10 +69,7 @@ public class Triangulator : MonoBehaviour {
 
 	bool isVertLine(string s)
 	{
-		//if (s.Trim ().StartsWith ("v ") /*&& !(s.Trim ().StartsWith ("vn")) && !(s.Trim ().StartsWith ("vt")))*/)
 			return s.Trim ().StartsWith ("v ");
-		/*else
-			return false;*/
 	}
 
 	bool isFaceLine(string s)
@@ -111,18 +111,19 @@ public class Triangulator : MonoBehaviour {
 	void DrawObject(Material m,Vector3[] v,Vector4[]t,int[]tri)
 	{
 		Mesh stuff = new Mesh ();
-		GameObject cube = new GameObject ("Drawn Object");
-		cube.transform.gameObject.AddComponent<MeshRenderer> ();
-		cube.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
+		OBJ = new GameObject ("Drawn Object");
+		OBJ.transform.gameObject.AddComponent<MeshRenderer> ();
+		OBJ.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
 		//cube.AddComponent (Type.GetType ("InitFDTransform"));
-		cube.AddComponent (Type.GetType ("Controls"));
-		cube.GetComponent<MeshRenderer> ().material = m;
-		cube.transform.localPosition = new Vector3 (0, -0.25f, 2);
+		OBJ.AddComponent (Type.GetType ("Controls"));
+		OBJ.GetComponent<MeshRenderer> ().material = m;
+		OBJ.transform.localPosition = new Vector3 (0, -0.25f, 2);
 		stuff.vertices = v;
 		stuff.triangles = tri;
 		stuff.tangents = t;
 		stuff.RecalculateNormals ();
 	}
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -144,13 +145,17 @@ public class Triangulator : MonoBehaviour {
 				vertices.Add(V);
 			}
 		}
-		DrawObject (Projection, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
+		DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
 			}
 			
 	// Update is called once per frame
 	void Update () 
 	{
-
+		if (OVRInput.GetDown (OVRInput.RawButton.X))
+			OBJ.GetComponent<MeshRenderer> ().material = Orthographic;
+		if (OVRInput.GetDown (OVRInput.RawButton.Y))
+			OBJ.GetComponent<MeshRenderer> ().material = Stereographic;
 	}
+
 }
 
