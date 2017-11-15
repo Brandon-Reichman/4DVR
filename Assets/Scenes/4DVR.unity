@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stereographic: {fileID: 2100000, guid: 98698304f9de23f4288364887211a564, type: 2}
   Orthographic: {fileID: 2100000, guid: 495fdea614f063248bf3987107a28c3e, type: 2}
-  mesh: {fileID: 100002, guid: e45b16f7f21dcd643abe54d0b1d0c311, type: 3}
+  mesh: {fileID: 100000, guid: 5a5c55d4b315b2f4ca33e2b083bd755e, type: 3}
 --- !u!114 &23034489
 MonoBehaviour:
   m_ObjectHideFlags: 0

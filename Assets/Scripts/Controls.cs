@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ public class Controls : MonoBehaviour {
 
 	private Vector3 eulerR,eulerL;
 	private bool XYZW,YZXW,XZYW;
-	private Quaternion refR, refL,rotR,rotL,stopL,stopR;
+	private Quaternion DownR, DownL,rotR,rotL,UpL,UpR;
 	private GameObject X,Y,Z;
 	// Use this for initialization
 	void Start () 
@@ -19,8 +19,8 @@ public class Controls : MonoBehaviour {
 		X.SetActive (true);
 		Y.SetActive (false);
 		Z.SetActive (false);
-		stopL=OVRInput.GetLocalControllerRotation (LeftHand);
-		stopR=OVRInput.GetLocalControllerRotation (RightHand);
+		UpL=OVRInput.GetLocalControllerRotation (LeftHand);
+		UpR=OVRInput.GetLocalControllerRotation (RightHand);
 		XYZW = false;
 		YZXW = true;
 		XZYW = false;
@@ -53,20 +53,21 @@ public class Controls : MonoBehaviour {
 		rotL = OVRInput.GetLocalControllerRotation (LeftHand);
 
 		if (OVRInput.GetDown (OVRInput.RawButton.RHandTrigger) || OVRInput.GetDown (OVRInput.RawButton.LHandTrigger)) {
-			refR = OVRInput.GetLocalControllerRotation (RightHand);
-			refL = OVRInput.GetLocalControllerRotation (LeftHand);
+			DownR = OVRInput.GetLocalControllerRotation (RightHand);
+			DownL = OVRInput.GetLocalControllerRotation (LeftHand);
 		}
-			
-		Quaternion R = (Quaternion.Inverse(rotR)*refR);
-		Quaternion L = (Quaternion.Inverse(rotL)*refL);
 
 		if (OVRInput.GetUp (OVRInput.RawButton.RHandTrigger) || OVRInput.GetDown (OVRInput.RawButton.LHandTrigger)) {
-			stopR = (Quaternion.Inverse (rotR) * refR);
-			stopL= (Quaternion.Inverse(rotL)*refL);
+			UpR = (Quaternion.Inverse (DownR) * rotR);
+			UpL= (Quaternion.Inverse(DownL)*rotL);
 		}
 
+		Quaternion R = UpR*Quaternion.Inverse(DownR)*rotR;
+		Quaternion L = UpL*Quaternion.Inverse(DownL)*rotL;
+
 		eulerL= L.eulerAngles * (Mathf.PI / 180);
-		eulerR = R.eulerAngles * (Mathf.PI / 180);
+		eulerR =R.eulerAngles * (Mathf.PI / 180);
+
 		if (OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&XYZW==true) {
 			Matrix4x4 XY = new Matrix4x4 (
 				new Vector4 (Mathf.Cos (eulerR.z), (-1) * Mathf.Sin (eulerR.z), 0f, 0f),
@@ -142,7 +143,8 @@ public class Controls : MonoBehaviour {
 		}
 		if (OVRInput.GetDown (OVRInput.RawButton.B)) {
 			gameObject.GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", Matrix4x4.identity);
-
+			UpR = Quaternion.identity;
+			UpL = Quaternion.identity;
 		}
 	}
 }
