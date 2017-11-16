@@ -230,12 +230,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 23034484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a676e8d244d6c145a937d1bd6c39469, type: 3}
+  m_Script: {fileID: 11500000, guid: c49befaaf988e554a80f806245a71a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Stereographic: {fileID: 2100000, guid: 98698304f9de23f4288364887211a564, type: 2}
   Orthographic: {fileID: 2100000, guid: 495fdea614f063248bf3987107a28c3e, type: 2}
-  mesh: {fileID: 100000, guid: 5a5c55d4b315b2f4ca33e2b083bd755e, type: 3}
 --- !u!114 &23034489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,6 +1069,10 @@ Prefab:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2389776, guid: 2f1666ad9b7fdd7459a360619d6ccffd, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 19c0a1f0676c3fb4092368cbf5c4c029, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f1666ad9b7fdd7459a360619d6ccffd, type: 2}
   m_IsPrefabParent: 0

@@ -1,90 +1,214 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using System.Linq;
 
-public class MeshLoader : MonoBehaviour {
+public class MeshLoader: MonoBehaviour {
 
-	public GameObject mesh;
-	public Material material;
+	public Material Stereographic,Orthographic;
 
-	private Renderer rend;
-	private Vector2[] uv;
-	private Mesh stuff;
-	private GameObject cube;
-	private Vector4[] tangents;
-	private Vector3[] vertices;
-	private string location;
-	private string[] file,faces,verts;
-	private float[] nums = new float[4];
-	private int j=0,k=0;
-	private Shader Ortho,Stereo;
+	private Controls controls;
+	private float[] nums=new float[4];
+	private GameObject OBJ;
+	private int P=1;
+	private string[] locations=new string[5];
+	List<int> ParseFaceLine(string faceline)
+	{
+		// Input "f 1//2 3//4 5//6"
+		// Output {1,3,5}
+
+		List<int> verts = new List<int> ();
+		// Split the line on spaces to get fields, and drop the first one.
+		foreach (string field in faceline.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).Skip(1)) {
+			// Each field consists of slash-separated ints.
+			// The first one is the index of the vertex to use.
+			// Extract that and ignore the rest.
+			int idx = int.Parse(field.Split('/')[0]);
+			verts.Add (idx);
+		}
+		//Debug.Log ("Parsed vertex line to: " + string.Join (", ", verts.Select (i => i.ToString ()).ToArray ()));
+		return verts;
+	}
+
+	float[] ParseVertexLine(string vertexline)
+	{
+		List<float> coords = new List<float> ();
+		vertexline = vertexline.PadRight (vertexline.Length + 1, ' ');
+		vertexline = vertexline.PadRight (vertexline.Length + 1, '0');
+		//Debug.Log ("parsing vertex line: "+vertexline);
+		foreach(string field in vertexline.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).Skip(1)){
+			//Debug.Log (field);
+			float ver = float.Parse (field);
+			//Debug.Log (ver);
+			coords.Add (ver);
+		}
+		return coords.ToArray ();
+	}
+
+	List<int[]> Triangulate(List<int> verts)
+	{
+		// Input { 1, 2, 3, 4, 5 }
+		// Ouput { {1,2,3}, {1,3,4}, {1,4,5} }
+
+		// TODO: Throw an exception if verts too short
+		List<int[]> tris = new List<int[]> ();
+		for (int i = 2; i < verts.Count; i++) {
+			tris.Add (new int[] { verts [0], verts [i - 1], verts [i] });
+			//Debug.Log (verts [0] + " " + verts [i - 1] + " " + verts [i]);
+		}
+		// TODO: change to a more readable way of making a string like 1,2,3,4 -> {1,2,3},{1,3,4}
+	   /* Debug.Log(
+			string.Join (", ", verts.Select (i => i.ToString ()).ToArray ())
+			+ " -> "
+			+ string.Join(", ", tris.Select (t => "{" + string.Join(", ",t.Select(i => i.ToString ()).ToArray()) + "}").ToArray())
+		);*/
+		return tris;
+	}
+
+	bool isVertLine(string s)
+	{
+			return s.Trim ().StartsWith ("v ");
+	}
+
+	bool isFaceLine(string s)
+	{
+		return s.Trim().StartsWith("f ");
+	}
+
+	int[] Flatten(List<int[]> t)
+	{
+		int[] tris=new int[(t.Count*3)];
+		for (int o = 0; o < t.Count; o++) {
+			for (int h = 0; h < 3; h++) {
+				tris [3*o+h] = t [o] [h];
+			}
+		}
+		for (int i = 0; i < tris.Length; i++)
+			tris [i] = tris [i] - 1;
+		return tris;
+	}
+
+	Vector3[] LoadVerts(List<float[]> V){
+		Vector3[]ver=new Vector3[V.Count];
+		for (int i = 0; i < V.Count; i++) {
+				ver [i].x=V [i] [0];
+				ver [i].y=V [i] [1];
+				ver [i].z=V [i] [2];
+			//Debug.Log (ver [i].x + " " + ver [i].y + " " + ver [i].z);
+			}
+		return ver;
+	}
+
+	Vector4[] LoadTans(List<float[]> V){
+		Vector4[] tan = new Vector4[V.Count];
+		for (int i = 0; i < V.Count; i++)
+			tan [i].x = V [i] [3];
+		return tan;
+	}
+
+	void DrawObject(Material m,Vector3[] v,Vector4[]t,int[]tri)
+	{
+		Mesh stuff = new Mesh ();
+		OBJ = new GameObject ("Drawn Object");
+		OBJ.transform.gameObject.AddComponent<MeshRenderer> ();
+		OBJ.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
+		OBJ.AddComponent (Type.GetType ("Controls"));
+		/*controls = OBJ.GetComponent<Controls> ();
+		controls.enabled = false;
+		controls.enabled = true;*/
+		OBJ.GetComponent<MeshRenderer> ().material = m;
+		OBJ.transform.localPosition = new Vector3 (0, -0.25f, 2);
+		stuff.vertices = v;
+		stuff.triangles = tri;
+		stuff.tangents = t;
+		stuff.RecalculateNormals ();
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
-		location = AssetDatabase.GetAssetPath (mesh);
-		file = System.IO.File.ReadAllLines (location);
-		//counting verts to allocate array size
-		for (int i=0;i<file.Length;i++) {
-			if (file [i].Trim ().StartsWith ("v") && !(file [i].Trim ().StartsWith ("vn"))) {
-				j++;
+		string[] lines;
+
+		locations [0] = "Assets/Meshes/5-cell.obj";
+		locations [1] = "Assets/Meshes/8-cell.obj";
+		locations [2] = "Assets/Meshes/rp2-40x140.obj";
+		locations [3] = "Assets/Meshes/rp2-cut-open-40x140.obj";
+		locations [4] = "Assets/Meshes/torus-4d-50x50.obj";
+
+		lines = System.IO.File.ReadAllLines (locations[1]);
+
+		List<int[]> triangles = new List<int[]> ();
+		List<float[]> vertices = new List<float[]> ();
+		foreach (string s in lines) {
+			if (isFaceLine(s)) {
+				List<int> faceverts = ParseFaceLine(s);
+				List<int[]> T=Triangulate(faceverts);
+				triangles.AddRange (T);
+			}
+			if (isVertLine (s)) {
+				float[] V=ParseVertexLine (s);
+				vertices.Add(V);
 			}
 		}
-		tangents = new Vector4[j];
-		vertices = new Vector3[j];
-		verts = new string[j];
-		uv = new Vector2[j];
-		//loading vertex value from file
-		for (int i=0;i<file.Length;i++) {
-			if (file [i].Trim ().StartsWith ("v") && !(file [i].Trim ().StartsWith ("vn"))) {
-				verts [k] = file [i].Remove(0,2);
-				verts [k] = verts [k].PadRight (verts [k].Length+1, ' ');
-				k++;
+		DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
 			}
-		}
-		//loading vectors
-		for (int i = 0; i < j; i++) {
-			string p = verts[i];
-			string[] e = p.Split (new char[]{ ' ' });
-			for (int q = 0; q < 4; q++)
-				nums [q] = float.Parse (e [q]);
-			vertices [i].x = nums [0];
-			vertices [i].y = nums [1];
-			vertices [i].z = nums [2];
-			tangents [i].x = nums [3];
-			uv [i] = new Vector2 (vertices [i].x, vertices [i].z);
-		}
-
-
-
-		Vector3 pos = new Vector3 (0, -0.25f,2);
-		stuff = new Mesh ();
-		cube=new GameObject("drawn cube");
-		int[] triangles=new int[] {0,1,3,3,1,2,4,0,3,4,3,7,3,6,7,2,6,3,5,6,2,2,1,5,4,7,6,6,5,4,0,4,1,1,4,5
-			,8,9,11,11,9,10,12,8,11,12,11,15,11,14,15,10,14,11,13,14,10,10,9,13,12,15,14,14,13,12,8,12,9,9,12,13,
-			2,1,9,9,10,2,10,11,2,2,11,3,0,3,11,11,8,0,1,0,8,8,9,1,
-			5,13,9,5,9,1,2,10,6,6,10,14,6,14,13,13,5,6,
-			6,14,7,7,14,15,15,12,7,7,12,4,4,12,13,13,5,4,
-			0,8,12,12,4,0,7,15,3,3,15,11};
-		cube.transform.gameObject.AddComponent<MeshRenderer> ();
-		cube.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
-		cube.AddComponent(Type.GetType("InitFDTransform"));
-		cube.GetComponent<MeshRenderer> ().material = material;
-		cube.transform.localPosition = pos;
-		stuff.vertices = vertices;
-		stuff.triangles = triangles;
-		stuff.uv = uv;
-		stuff.RecalculateNormals();
-		stuff.tangents = tangents;
-		}
-
-	/*void Update()
+			
+	// Update is called once per frame
+	void Update () 
 	{
-		if (OVRInput.Get (OVRInput.RawButton.LThumbstick))
-			rend.material.shader = Shader.Find ("FDStandard");
-		if (OVRInput.Get (OVRInput.RawButton.RThumbstick))
-			rend.material.shader = Shader.Find ("StereographicStandard");
-	}*/
+		if (OVRInput.GetDown (OVRInput.RawButton.X))
+			OBJ.GetComponent<MeshRenderer> ().material = Orthographic;
+		if (OVRInput.GetDown (OVRInput.RawButton.Y))
+			OBJ.GetComponent<MeshRenderer> ().material = Stereographic;
+		
+		if (OVRInput.GetDown (OVRInput.RawButton.RIndexTrigger)) {
+			Destroy (OBJ);
+			P++;
+			if (P > 4)
+				P = 0;
+			string[] lines = System.IO.File.ReadAllLines (locations[P]);
+
+			List<int[]> triangles = new List<int[]> ();
+			List<float[]> vertices = new List<float[]> ();
+			foreach (string s in lines) {
+				if (isFaceLine(s)) {
+					List<int> faceverts = ParseFaceLine(s);
+					List<int[]> T=Triangulate(faceverts);
+					triangles.AddRange (T);
+				}
+				if (isVertLine (s)) {
+					float[] V=ParseVertexLine (s);
+					vertices.Add(V);
+				}
+			}
+			DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
+		}
+		if (OVRInput.GetDown (OVRInput.RawButton.LIndexTrigger)) {
+			Destroy (OBJ);
+			P--;
+			if (P < 0)
+				P = 4;
+			string[] lines = System.IO.File.ReadAllLines (locations[P]);
+
+			List<int[]> triangles = new List<int[]> ();
+			List<float[]> vertices = new List<float[]> ();
+			foreach (string s in lines) {
+				if (isFaceLine(s)) {
+					List<int> faceverts = ParseFaceLine(s);
+					List<int[]> T=Triangulate(faceverts);
+					triangles.AddRange (T);
+				}
+				if (isVertLine (s)) {
+					float[] V=ParseVertexLine (s);
+					vertices.Add(V);
+				}
+			}
+			DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
+		}
+		if (OVRInput.GetDown (OVRInput.Button.Start))
+			Application.Quit ();
+	}
+
 }
+

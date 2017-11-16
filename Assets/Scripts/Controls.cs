@@ -1,4 +1,4 @@
-﻿  using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,18 +9,19 @@ public class Controls : MonoBehaviour {
 	private Vector3 eulerR,eulerL;
 	private bool XYZW,YZXW,XZYW;
 	private Quaternion DownR, DownL,rotR,rotL,UpL,UpR;
-	private GameObject X,Y,Z;
+	private GameObject X,Y,Z,Planes;
 	// Use this for initialization
-	void Start () 
+	void Start() 
 	{
-		X = GameObject.Find ("YZXW");
-		Y = GameObject.Find ("XZYW");
-		Z = GameObject.Find ("XYZW");
+		Planes = GameObject.Find ("Planes");
+		X = Planes.transform.Find ("YZXW").gameObject;
+		Y = Planes.transform.Find ("XZYW").gameObject;
+		Z = Planes.transform.Find ("XYZW").gameObject;
 		X.SetActive (true);
 		Y.SetActive (false);
 		Z.SetActive (false);
-		UpL=OVRInput.GetLocalControllerRotation (LeftHand);
-		UpR=OVRInput.GetLocalControllerRotation (RightHand);
+		UpL = Quaternion.identity;
+		UpR = Quaternion.identity;
 		XYZW = false;
 		YZXW = true;
 		XZYW = false;
@@ -29,6 +30,7 @@ public class Controls : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+
 		if (OVRInput.GetDown (OVRInput.RawButton.A) && XYZW == true) {
 			XYZW = false;
 			Z.SetActive (false);
@@ -58,12 +60,12 @@ public class Controls : MonoBehaviour {
 		}
 
 		if (OVRInput.GetUp (OVRInput.RawButton.RHandTrigger) || OVRInput.GetDown (OVRInput.RawButton.LHandTrigger)) {
-			UpR = (Quaternion.Inverse (DownR) * rotR);
-			UpL= (Quaternion.Inverse(DownL)*rotL);
+			UpR =Quaternion.Inverse(DownR)*rotR;
+			UpL=Quaternion.Inverse(DownR)*rotL;
 		}
 
-		Quaternion R = UpR*Quaternion.Inverse(DownR)*rotR;
-		Quaternion L = UpL*Quaternion.Inverse(DownL)*rotL;
+		Quaternion R = /*UpR*/Quaternion.Inverse(DownR)*rotR;
+		Quaternion L = /*UpL*/Quaternion.Inverse(DownR)*rotL;
 
 		eulerL= L.eulerAngles * (Mathf.PI / 180);
 		eulerR =R.eulerAngles * (Mathf.PI / 180);

@@ -11,8 +11,6 @@ public class InitFDTransform : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.Escape))
-			UnityEditor.EditorApplication.isPlaying = false;
 		
 		if (OVRInput.Get (OVRInput.RawButton.A) && OVRInput.Get (OVRInput.RawButton.RIndexTrigger)||OVRInput.Get (OVRInput.RawButton.A) && OVRInput.Get (OVRInput.RawButton.LIndexTrigger)) {
 			M = new Matrix4x4 (
