@@ -6,13 +6,16 @@ public class Controls : MonoBehaviour {
 
 	private OVRInput.Controller RightHand=OVRInput.Controller.RTouch,LeftHand=OVRInput.Controller.LTouch;
 
+	private Renderer rend;
 	private Vector3 eulerR,eulerL;
 	private bool XYZW,YZXW,XZYW;
 	private Quaternion DownR, DownL,rotR,rotL,UpL,UpR;
 	private GameObject X,Y,Z,Planes;
+	private Matrix4x4 T;
 	// Use this for initialization
 	void Start() 
 	{
+		rend = GetComponent<Renderer> ();
 		Planes = GameObject.Find ("Planes");
 		X = Planes.transform.Find ("YZXW").gameObject;
 		Y = Planes.transform.Find ("XZYW").gameObject;
@@ -57,15 +60,17 @@ public class Controls : MonoBehaviour {
 		if (OVRInput.GetDown (OVRInput.RawButton.RHandTrigger) || OVRInput.GetDown (OVRInput.RawButton.LHandTrigger)) {
 			DownR = OVRInput.GetLocalControllerRotation (RightHand);
 			DownL = OVRInput.GetLocalControllerRotation (LeftHand);
+			T = rend.material.GetMatrix ("_fdtransform");
 		}
 
-		if (OVRInput.GetUp (OVRInput.RawButton.RHandTrigger) || OVRInput.GetDown (OVRInput.RawButton.LHandTrigger)) {
-			UpR =Quaternion.Inverse(DownR)*rotR;
-			UpL=Quaternion.Inverse(DownR)*rotL;
+		if (OVRInput.GetUp (OVRInput.RawButton.RHandTrigger) || OVRInput.GetUp (OVRInput.RawButton.LHandTrigger)) {
+			DownR = OVRInput.GetLocalControllerRotation (RightHand);
+			DownL = OVRInput.GetLocalControllerRotation (LeftHand);
+			T = rend.material.GetMatrix ("_fdtransform");
 		}
 
-		Quaternion R = /*UpR*/Quaternion.Inverse(DownR)*rotR;
-		Quaternion L = /*UpL*/Quaternion.Inverse(DownR)*rotL;
+		Quaternion R = Quaternion.Inverse(DownR)*rotR;
+		Quaternion L = Quaternion.Inverse(DownL)*rotL;
 
 		eulerL= L.eulerAngles * (Mathf.PI / 180);
 		eulerR =R.eulerAngles * (Mathf.PI / 180);
@@ -76,7 +81,7 @@ public class Controls : MonoBehaviour {
 				new Vector4 (Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0f, 0f),
 				new Vector4 (0f, 0f, 1, 0),
 				new Vector4 (0f, 0f,0,1));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", XY);
+			rend.material.SetMatrix ("_fdtransform", XY*T);
 		}
 		if (OVRInput.Get (OVRInput.RawButton.LHandTrigger) && XYZW == true) {
 			Matrix4x4 ZW = new Matrix4x4 (
@@ -84,7 +89,7 @@ public class Controls : MonoBehaviour {
 				new Vector4 (0, 1, 0f, 0f),
 				new Vector4 (0f, 0f, Mathf.Cos (eulerL.z), (-1) * Mathf.Sin (eulerL.z)),
 				new Vector4 (0f, 0f, Mathf.Sin (eulerL.z), Mathf.Cos (eulerL.z)));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", ZW);
+			rend.material.SetMatrix ("_fdtransform", ZW*T);
 		}
 		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&OVRInput.Get (OVRInput.RawButton.LHandTrigger))&&XYZW==true) {
 			Matrix4x4 XYZW = new Matrix4x4 (
@@ -92,7 +97,7 @@ public class Controls : MonoBehaviour {
 				new Vector4 (Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0f, 0f),
 				new Vector4 (0f, 0f, Mathf.Cos (eulerL.z), (-1) * Mathf.Sin (eulerL.z)),
 				new Vector4 (0f, 0f, Mathf.Sin (eulerL.z), Mathf.Cos (eulerL.z)));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", XYZW);
+			rend.material.SetMatrix ("_fdtransform", XYZW*T);
 		}
 		if (OVRInput.Get (OVRInput.RawButton.RHandTrigger) && YZXW == true) {
 			Matrix4x4 YZ = new Matrix4x4 (
@@ -100,7 +105,7 @@ public class Controls : MonoBehaviour {
 				new Vector4 (0, Mathf.Cos (eulerR.z), Mathf.Sin (eulerR.z), 0),
 				new Vector4 (0, (-1) * Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0),
 				new Vector4 (0, 0, 0, 1));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", YZ);
+			rend.material.SetMatrix ("_fdtransform", YZ*T);
 		}
 		if (OVRInput.Get (OVRInput.RawButton.LHandTrigger) && YZXW == true) {
 			Matrix4x4 XW = new Matrix4x4(
@@ -108,7 +113,7 @@ public class Controls : MonoBehaviour {
 				new Vector4 (0, 1, 0, 0),
 				new Vector4 (0, 0,1, 0),
 				new Vector4 ((-1) * Mathf.Sin (eulerL.z), 0, 0, Mathf.Cos (eulerL.z)));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", XW);
+			rend.material.SetMatrix ("_fdtransform", XW*T);
 		}
 		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&OVRInput.Get (OVRInput.RawButton.LHandTrigger))&&YZXW==true) {
 			Matrix4x4 YZXW = new Matrix4x4 (
@@ -116,7 +121,7 @@ public class Controls : MonoBehaviour {
 				new Vector4 (0, Mathf.Cos (eulerR.z), Mathf.Sin (eulerR.z), 0),
 				new Vector4 (0, (-1) * Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0),
 				new Vector4 ((-1) * Mathf.Sin (eulerL.z), 0, 0, Mathf.Cos (eulerL.z)));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", YZXW);
+			rend.material.SetMatrix ("_fdtransform", YZXW*T);
 		}
 		if (OVRInput.Get (OVRInput.RawButton.RHandTrigger) && XZYW == true) {
 			Matrix4x4 XZ=new Matrix4x4(
@@ -124,7 +129,7 @@ public class Controls : MonoBehaviour {
 				new Vector4 (0,1, 0, 0),
 				new Vector4 (Mathf.Sin (eulerR.z), 0, Mathf.Cos (eulerR.z), 0),
 				new Vector4 (0, 0, 0,1));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", XZ);
+			rend.material.SetMatrix ("_fdtransform", XZ*T);
 		}
 		if(OVRInput.Get(OVRInput.RawButton.LHandTrigger)&& XZYW == true){
 			Matrix4x4 YW = new Matrix4x4 (
@@ -132,7 +137,7 @@ public class Controls : MonoBehaviour {
 				              new Vector4 (0, Mathf.Cos (eulerL.z), 0, (-1) * Mathf.Sin (eulerL.z)),
 				              new Vector4 (0, 0,1, 0),
 				              new Vector4 (0, Mathf.Sin (eulerL.z), 0, Mathf.Cos (eulerL.z)));
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", YW);
+			rend.material.SetMatrix ("_fdtransform", YW*T);
 		}
 		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger) && OVRInput.Get (OVRInput.RawButton.LHandTrigger)) && XZYW == true) {
 			Matrix4x4 XZ = new Matrix4x4 (
@@ -141,10 +146,10 @@ public class Controls : MonoBehaviour {
 				new Vector4 (Mathf.Sin (eulerR.z), 0, Mathf.Cos (eulerR.z), 0),
 				new Vector4 (0, Mathf.Sin (eulerL.z), 0, Mathf.Cos (eulerL.z))
 			);
-			GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", XZ);
+			rend.material.SetMatrix ("_fdtransform", XZ*T);
 		}
 		if (OVRInput.GetDown (OVRInput.RawButton.B)) {
-			gameObject.GetComponent<Renderer> ().material.SetMatrix ("_fdtransform", Matrix4x4.identity);
+			rend.material.SetMatrix ("_fdtransform", Matrix4x4.identity);
 			UpR = Quaternion.identity;
 			UpL = Quaternion.identity;
 		}
