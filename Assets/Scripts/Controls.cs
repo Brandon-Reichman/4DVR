@@ -9,9 +9,9 @@ public class Controls : MonoBehaviour {
 	private Renderer rend;
 	private Vector3 eulerR,eulerL;
 	private bool XYZW,YZXW,XZYW;
-	private Quaternion DownR, DownL,rotR,rotL,UpL,UpR;
+	private Quaternion DownR, DownL,rotR,rotL;
 	private GameObject X,Y,Z,Planes;
-	private Matrix4x4 T;
+	private Matrix4x4 T=Matrix4x4.identity,A=Matrix4x4.identity,B=Matrix4x4.identity;
 	// Use this for initialization
 	void Start() 
 	{
@@ -23,8 +23,6 @@ public class Controls : MonoBehaviour {
 		X.SetActive (true);
 		Y.SetActive (false);
 		Z.SetActive (false);
-		UpL = Quaternion.identity;
-		UpR = Quaternion.identity;
 		XYZW = false;
 		YZXW = true;
 		XZYW = false;
@@ -51,7 +49,6 @@ public class Controls : MonoBehaviour {
 			Y.SetActive (false);
 			XYZW = true;
 			Z.SetActive (true);
-
 		}
 
 		rotR = OVRInput.GetLocalControllerRotation (RightHand);
@@ -67,6 +64,8 @@ public class Controls : MonoBehaviour {
 			DownR = OVRInput.GetLocalControllerRotation (RightHand);
 			DownL = OVRInput.GetLocalControllerRotation (LeftHand);
 			T = rend.material.GetMatrix ("_fdtransform");
+			A = Matrix4x4.identity;
+			B = Matrix4x4.identity;
 		}
 
 		Quaternion R = Quaternion.Inverse(DownR)*rotR;
@@ -75,83 +74,64 @@ public class Controls : MonoBehaviour {
 		eulerL= L.eulerAngles * (Mathf.PI / 180);
 		eulerR =R.eulerAngles * (Mathf.PI / 180);
 
-		if (OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&XYZW==true) {
-			Matrix4x4 XY = new Matrix4x4 (
-				new Vector4 (Mathf.Cos (eulerR.z), (-1) * Mathf.Sin (eulerR.z), 0f, 0f),
-				new Vector4 (Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0f, 0f),
-				new Vector4 (0f, 0f, 1, 0),
-				new Vector4 (0f, 0f,0,1));
-			rend.material.SetMatrix ("_fdtransform", XY*T);
+		if (XYZW) {
+			if (OVRInput.Get (OVRInput.RawButton.RHandTrigger)) {
+				A = new Matrix4x4 (
+					new Vector4 (Mathf.Cos (eulerR.z), (-1) * Mathf.Sin (eulerR.z), 0f, 0f),
+					new Vector4 (Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0f, 0f),
+					new Vector4 (0f, 0f, 1, 0),
+					new Vector4 (0f, 0f, 0, 1));
+			}
+			if (OVRInput.Get (OVRInput.RawButton.LHandTrigger) && XYZW == true) {
+				B = new Matrix4x4 (
+					new Vector4 (1, 0, 0f, 0f),
+					new Vector4 (0, 1, 0f, 0f),
+					new Vector4 (0f, 0f, Mathf.Cos (eulerL.z), (-1) * Mathf.Sin (eulerL.z)),
+					new Vector4 (0f, 0f, Mathf.Sin (eulerL.z), Mathf.Cos (eulerL.z)));
+			}
+			rend.material.SetMatrix ("_fdtransform", A*B*T);
 		}
-		if (OVRInput.Get (OVRInput.RawButton.LHandTrigger) && XYZW == true) {
-			Matrix4x4 ZW = new Matrix4x4 (
-				new Vector4 (1,0, 0f, 0f),
-				new Vector4 (0, 1, 0f, 0f),
-				new Vector4 (0f, 0f, Mathf.Cos (eulerL.z), (-1) * Mathf.Sin (eulerL.z)),
-				new Vector4 (0f, 0f, Mathf.Sin (eulerL.z), Mathf.Cos (eulerL.z)));
-			rend.material.SetMatrix ("_fdtransform", ZW*T);
+
+		if (YZXW) {
+			if (OVRInput.Get (OVRInput.RawButton.RHandTrigger)) {
+				A= new Matrix4x4 (
+					new Vector4 (1, 0, 0, 0),
+					new Vector4 (0, Mathf.Cos (eulerR.z), Mathf.Sin (eulerR.z), 0),
+					new Vector4 (0, (-1) * Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0),
+					new Vector4 (0, 0, 0, 1));
+			}
+			if (OVRInput.Get (OVRInput.RawButton.LHandTrigger)) {
+				B = new Matrix4x4(
+					new Vector4 (Mathf.Cos (eulerL.z), 0, 0, Mathf.Sin (eulerL.z)),
+					new Vector4 (0, 1, 0, 0),
+					new Vector4 (0, 0,1, 0),
+					new Vector4 ((-1) * Mathf.Sin (eulerL.z), 0, 0, Mathf.Cos (eulerL.z)));
+			}
+			rend.material.SetMatrix ("_fdtransform", A*B*T);
 		}
-		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&OVRInput.Get (OVRInput.RawButton.LHandTrigger))&&XYZW==true) {
-			Matrix4x4 XYZW = new Matrix4x4 (
-				new Vector4 (Mathf.Cos (eulerR.z), (-1) * Mathf.Sin (eulerR.z), 0f, 0f),
-				new Vector4 (Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0f, 0f),
-				new Vector4 (0f, 0f, Mathf.Cos (eulerL.z), (-1) * Mathf.Sin (eulerL.z)),
-				new Vector4 (0f, 0f, Mathf.Sin (eulerL.z), Mathf.Cos (eulerL.z)));
-			rend.material.SetMatrix ("_fdtransform", XYZW*T);
+
+		if (XZYW) {
+			if (OVRInput.Get (OVRInput.RawButton.RHandTrigger)) {
+				A = new Matrix4x4 (
+					new Vector4 (Mathf.Cos (eulerR.z), 0, (-1) * Mathf.Sin (eulerR.z), 0),
+					new Vector4 (0, 1, 0, 0),
+					new Vector4 (Mathf.Sin (eulerR.z), 0, Mathf.Cos (eulerR.z), 0),
+					new Vector4 (0, 0, 0, 1));
+			}
+			if (OVRInput.Get (OVRInput.RawButton.LHandTrigger)) {
+				B = new Matrix4x4(
+					new Vector4 (1, 0, 0, 0),
+					new Vector4 (0, Mathf.Cos (eulerL.z), 0, (-1) * Mathf.Sin (eulerL.z)),
+					new Vector4 (0, 0,1, 0),
+					new Vector4 (0, Mathf.Sin (eulerL.z), 0, Mathf.Cos (eulerL.z)));
+					}
+			rend.material.SetMatrix ("_fdtransform", A*B*T);
 		}
-		if (OVRInput.Get (OVRInput.RawButton.RHandTrigger) && YZXW == true) {
-			Matrix4x4 YZ = new Matrix4x4 (
-				new Vector4 (1, 0, 0, 0),
-				new Vector4 (0, Mathf.Cos (eulerR.z), Mathf.Sin (eulerR.z), 0),
-				new Vector4 (0, (-1) * Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0),
-				new Vector4 (0, 0, 0, 1));
-			rend.material.SetMatrix ("_fdtransform", YZ*T);
-		}
-		if (OVRInput.Get (OVRInput.RawButton.LHandTrigger) && YZXW == true) {
-			Matrix4x4 XW = new Matrix4x4(
-				new Vector4 (Mathf.Cos (eulerL.z), 0, 0, Mathf.Sin (eulerL.z)),
-				new Vector4 (0, 1, 0, 0),
-				new Vector4 (0, 0,1, 0),
-				new Vector4 ((-1) * Mathf.Sin (eulerL.z), 0, 0, Mathf.Cos (eulerL.z)));
-			rend.material.SetMatrix ("_fdtransform", XW*T);
-		}
-		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger)&&OVRInput.Get (OVRInput.RawButton.LHandTrigger))&&YZXW==true) {
-			Matrix4x4 YZXW = new Matrix4x4 (
-				new Vector4 (Mathf.Cos (eulerL.z), 0, 0, Mathf.Sin (eulerL.z)),
-				new Vector4 (0, Mathf.Cos (eulerR.z), Mathf.Sin (eulerR.z), 0),
-				new Vector4 (0, (-1) * Mathf.Sin (eulerR.z), Mathf.Cos (eulerR.z), 0),
-				new Vector4 ((-1) * Mathf.Sin (eulerL.z), 0, 0, Mathf.Cos (eulerL.z)));
-			rend.material.SetMatrix ("_fdtransform", YZXW*T);
-		}
-		if (OVRInput.Get (OVRInput.RawButton.RHandTrigger) && XZYW == true) {
-			Matrix4x4 XZ=new Matrix4x4(
-				new Vector4 (Mathf.Cos (eulerR.z), 0, (-1) * Mathf.Sin (eulerR.z), 0),
-				new Vector4 (0,1, 0, 0),
-				new Vector4 (Mathf.Sin (eulerR.z), 0, Mathf.Cos (eulerR.z), 0),
-				new Vector4 (0, 0, 0,1));
-			rend.material.SetMatrix ("_fdtransform", XZ*T);
-		}
-		if(OVRInput.Get(OVRInput.RawButton.LHandTrigger)&& XZYW == true){
-			Matrix4x4 YW = new Matrix4x4 (
-				              new Vector4 (1, 0, 0, 0),
-				              new Vector4 (0, Mathf.Cos (eulerL.z), 0, (-1) * Mathf.Sin (eulerL.z)),
-				              new Vector4 (0, 0,1, 0),
-				              new Vector4 (0, Mathf.Sin (eulerL.z), 0, Mathf.Cos (eulerL.z)));
-			rend.material.SetMatrix ("_fdtransform", YW*T);
-		}
-		if ((OVRInput.Get (OVRInput.RawButton.RHandTrigger) && OVRInput.Get (OVRInput.RawButton.LHandTrigger)) && XZYW == true) {
-			Matrix4x4 XZ = new Matrix4x4 (
-				new Vector4 (Mathf.Cos (eulerR.z), 0, (-1) * Mathf.Sin (eulerR.z), 0),
-				new Vector4 (0, Mathf.Cos (eulerL.z), 0, (-1) * Mathf.Sin (eulerL.z)),
-				new Vector4 (Mathf.Sin (eulerR.z), 0, Mathf.Cos (eulerR.z), 0),
-				new Vector4 (0, Mathf.Sin (eulerL.z), 0, Mathf.Cos (eulerL.z))
-			);
-			rend.material.SetMatrix ("_fdtransform", XZ*T);
-		}
+
 		if (OVRInput.GetDown (OVRInput.RawButton.B)) {
-			rend.material.SetMatrix ("_fdtransform", Matrix4x4.identity);
-			UpR = Quaternion.identity;
-			UpL = Quaternion.identity;
+			A = Matrix4x4.identity;
+			B = Matrix4x4.identity;
+			T = Matrix4x4.identity;
 		}
 	}
 }
