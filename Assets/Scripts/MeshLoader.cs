@@ -136,7 +136,7 @@ public class MeshLoader: MonoBehaviour {
 		locations [3] = "Assets/Meshes/rp2-cut-open-40x140.obj";
 		locations [4] = "Assets/Meshes/torus-4d-50x50.obj";
 
-		lines = System.IO.File.ReadAllLines (locations[1]);
+		lines = System.IO.File.ReadAllLines (locations[P]);
 
 		List<int[]> triangles = new List<int[]> ();
 		List<float[]> vertices = new List<float[]> ();
