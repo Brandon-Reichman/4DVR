@@ -7,6 +7,7 @@ using System.Linq;
 public class MeshLoader: MonoBehaviour {
 
 	public Material Stereographic,Orthographic;
+	public Color color;
 
 	private Controls controls;
 	private float[] nums=new float[4];
@@ -114,14 +115,12 @@ public class MeshLoader: MonoBehaviour {
 		OBJ.transform.gameObject.AddComponent<MeshRenderer> ();
 		OBJ.transform.gameObject.AddComponent<MeshFilter> ().sharedMesh = stuff;
 		OBJ.AddComponent (Type.GetType ("Controls"));
-		/*controls = OBJ.GetComponent<Controls> ();
-		controls.enabled = false;
-		controls.enabled = true;*/
 		OBJ.GetComponent<MeshRenderer> ().material = m;
 		OBJ.transform.localPosition = new Vector3 (0, -0.25f, 2);
 		stuff.vertices = v;
 		stuff.triangles = tri;
 		stuff.tangents = t;
+		OBJ.GetComponent<Renderer> ().material.color = color;
 		stuff.RecalculateNormals ();
 	}
 
@@ -161,6 +160,12 @@ public class MeshLoader: MonoBehaviour {
 			OBJ.GetComponent<MeshRenderer> ().material = Orthographic;
 		if (OVRInput.GetDown (OVRInput.RawButton.Y))
 			OBJ.GetComponent<MeshRenderer> ().material = Stereographic;
+		
+		//scale objects accordingly
+		if (P == 4) 
+			OBJ.transform.localScale = new Vector3 (.4f, .4f, .4f);
+		if (P == 0)
+			OBJ.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
 		
 		if (OVRInput.GetDown (OVRInput.RawButton.RIndexTrigger)) {
 			Destroy (OBJ);

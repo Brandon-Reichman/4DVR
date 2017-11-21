@@ -235,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stereographic: {fileID: 2100000, guid: 98698304f9de23f4288364887211a564, type: 2}
   Orthographic: {fileID: 2100000, guid: 495fdea614f063248bf3987107a28c3e, type: 2}
+  color: {r: 0.2509804, g: 0.93333334, b: 0.1254902, a: 0.44705883}
 --- !u!114 &23034489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2106,7 +2107,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 482970, guid: 074728566132335428608c1b7e7f1f14, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.42
+      value: 0.199
       objectReference: {fileID: 0}
     - target: {fileID: 482970, guid: 074728566132335428608c1b7e7f1f14, type: 2}
       propertyPath: m_LocalPosition.z
