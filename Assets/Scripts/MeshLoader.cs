@@ -7,12 +7,12 @@ using System.Linq;
 public class MeshLoader: MonoBehaviour {
 
 	public Material Stereographic,Orthographic;
-	public Color color;
+	public Color OrthographicColor,StereographicColor;
 
 	private Controls controls;
 	private float[] nums=new float[4];
 	private GameObject OBJ;
-	private int P=1;
+	public int P=1;
 	private string[] locations=new string[5];
 	List<int> ParseFaceLine(string faceline)
 	{
@@ -108,8 +108,7 @@ public class MeshLoader: MonoBehaviour {
 		return tan;
 	}
 
-	void DrawObject(Material m,Vector3[] v,Vector4[]t,int[]tri)
-	{
+	void DrawObject(Material m,Vector3[] v,Vector4[]t,int[]tri){
 		Mesh stuff = new Mesh ();
 		OBJ = new GameObject ("Drawn Object");
 		OBJ.transform.gameObject.AddComponent<MeshRenderer> ();
@@ -120,13 +119,25 @@ public class MeshLoader: MonoBehaviour {
 		stuff.vertices = v;
 		stuff.triangles = tri;
 		stuff.tangents = t;
-		OBJ.GetComponent<Renderer> ().material.color = color;
 		stuff.RecalculateNormals ();
+	}
+
+	void Scale(Vector3[] V){
+		float R = 0;
+		Vector3 I = new Vector3 (0, 0, 0);
+		for (int i = 0; i < V.Length; i++) {
+			if (Vector3.Distance (I, V [i]) > R)
+				R = Vector3.Distance(I,V[i]);
+		}
+		OBJ.transform.localScale = 0.5f * new Vector3(1 / R, 1 / R, 1 / R);
 	}
 
 	// Use this for initialization
 	void Start () 
 	{
+		Orthographic.color = OrthographicColor;
+		Stereographic.color = StereographicColor;
+
 		string[] lines;
 
 		locations [0] = "Assets/Meshes/5-cell.obj";
@@ -151,6 +162,7 @@ public class MeshLoader: MonoBehaviour {
 			}
 		}
 		DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
+		Scale(LoadVerts(vertices));
 			}
 			
 	// Update is called once per frame
@@ -160,12 +172,9 @@ public class MeshLoader: MonoBehaviour {
 			OBJ.GetComponent<MeshRenderer> ().material = Orthographic;
 		if (OVRInput.GetDown (OVRInput.RawButton.Y))
 			OBJ.GetComponent<MeshRenderer> ().material = Stereographic;
-		
-		//scale objects accordingly
-		if (P == 4) 
-			OBJ.transform.localScale = new Vector3 (.4f, .4f, .4f);
-		if (P == 0)
-			OBJ.transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
+
+		if (OVRInput.GetDown (OVRInput.RawButton.Y)&&P==4)
+			OBJ.GetComponent<MeshRenderer> ().material = Orthographic;
 		
 		if (OVRInput.GetDown (OVRInput.RawButton.RIndexTrigger)) {
 			Destroy (OBJ);
@@ -188,6 +197,7 @@ public class MeshLoader: MonoBehaviour {
 				}
 			}
 			DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
+			Scale(LoadVerts(vertices));
 		}
 		if (OVRInput.GetDown (OVRInput.RawButton.LIndexTrigger)) {
 			Destroy (OBJ);
@@ -210,6 +220,7 @@ public class MeshLoader: MonoBehaviour {
 				}
 			}
 			DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
+			Scale(LoadVerts(vertices));
 		}
 		if (OVRInput.GetDown (OVRInput.Button.Start))
 			Application.Quit ();

@@ -5,13 +5,13 @@ using UnityEngine;
 public class Controls : MonoBehaviour {
 
 	private OVRInput.Controller RightHand=OVRInput.Controller.RTouch,LeftHand=OVRInput.Controller.LTouch;
-
 	private Renderer rend;
 	private Vector3 eulerR,eulerL;
 	private bool XYZW,YZXW,XZYW;
 	private Quaternion DownR, DownL,rotR,rotL;
 	private GameObject X,Y,Z,Planes;
 	private Matrix4x4 T=Matrix4x4.identity,A=Matrix4x4.identity,B=Matrix4x4.identity;
+
 	// Use this for initialization
 	void Start() 
 	{
