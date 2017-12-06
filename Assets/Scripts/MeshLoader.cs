@@ -140,11 +140,11 @@ public class MeshLoader: MonoBehaviour {
 
 		string[] lines;
 
-		locations [0] = "Assets/Meshes/5-cell.obj";
-		locations [1] = "Assets/Meshes/8-cell.obj";
-		locations [2] = "Assets/Meshes/rp2-40x140.obj";
-		locations [3] = "Assets/Meshes/rp2-cut-open-40x140.obj";
-		locations [4] = "Assets/Meshes/torus-4d-50x50.obj";
+		locations [0] = "C:/Users/breich5/Desktop/4D Meshes/5-Cell.obj";
+		locations [1] = "C:/Users/breich5/Desktop/4D Meshes/8-cell.obj";
+		locations [2] = "C:/Users/breich5/Desktop/4D Meshes/rp2-40x140.obj";
+		locations [3] = "C:/Users/breich5/Desktop/4D Meshes/rp2-cut-open-40x140.obj";
+		locations [4] = "C:/Users/breich5/Desktop/4D Meshes/torus-4d-50x50.obj";
 
 		lines = System.IO.File.ReadAllLines (locations[P]);
 
