@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e45b16f7f21dcd643abe54d0b1d0c311
-timeCreated: 1510270399
+guid: 9abd4d5d2e480dc49bfb97f7a95bd6ff
+timeCreated: 1513194401
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -85,5 +85,5 @@ ModelImporter:
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
-  assetBundleName: 4dmeshes
+  assetBundleName: 
   assetBundleVariant: 

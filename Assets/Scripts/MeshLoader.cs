@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.IO;
 
 public class MeshLoader: MonoBehaviour {
 
@@ -138,15 +139,15 @@ public class MeshLoader: MonoBehaviour {
 		Orthographic.color = OrthographicColor;
 		Stereographic.color = StereographicColor;
 
-		string[] lines;
+		//Debug.Log (Application.streamingAssetsPath);
 
-		locations [0] = "C:/Users/breich5/Desktop/4D Meshes/5-Cell.obj";
-		locations [1] = "C:/Users/breich5/Desktop/4D Meshes/8-cell.obj";
-		locations [2] = "C:/Users/breich5/Desktop/4D Meshes/rp2-40x140.obj";
-		locations [3] = "C:/Users/breich5/Desktop/4D Meshes/rp2-cut-open-40x140.obj";
-		locations [4] = "C:/Users/breich5/Desktop/4D Meshes/torus-4d-50x50.obj";
+		locations [0] = Application.streamingAssetsPath+"\\5-cell.obj";
+		locations [1] = Application.streamingAssetsPath+"\\8-cell.obj";
+		locations [2] = Application.streamingAssetsPath+"\\rp2-40x140.obj";
+		locations [3] = Application.streamingAssetsPath+"\\rp2-cut-open-40x140.obj";
+		locations [4] = Application.streamingAssetsPath+"\\torus-4d-50x50.obj";
 
-		lines = System.IO.File.ReadAllLines (locations[P]);
+		string[] lines = System.IO.File.ReadAllLines(locations[P]);
 
 		List<int[]> triangles = new List<int[]> ();
 		List<float[]> vertices = new List<float[]> ();

@@ -27,9 +27,6 @@ public class Controls : MonoBehaviour {
 		Xrend.material.color = Color.green;
 		Yrend.material.color = Color.red;
 		Zrend.material.color = Color.red;
-		/*X.SetActive (true);
-		Y.SetActive (false);
-		Z.SetActive (false);*/
 		XYZW = false;
 		YZXW = true;
 		XZYW = false;
@@ -38,30 +35,26 @@ public class Controls : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (OVRInput.GetDown (OVRInput.Button.Start))
+			Application.Quit ();
 
 		if (OVRInput.GetDown (OVRInput.RawButton.A) && XYZW == true) {
 			XYZW = false;
 			Zrend.material.color = Color.red;
-			//Z.SetActive (false);
 			YZXW = true;
 			Xrend.material.color = Color.green;
-			//X.SetActive (true);
 
 		} else if (OVRInput.GetDown (OVRInput.RawButton.A) && YZXW == true) {
 			YZXW = false;
-			Xrend.material.color = Color.red;
-			//X.SetActive (false);
+			Xrend.material.color = Color.red;;
 			XZYW = true;
 			Yrend.material.color = Color.green;
-			//Y.SetActive (true);
 
 		} else if (OVRInput.GetDown (OVRInput.RawButton.A) && XZYW == true) {
 			XZYW = false;
 			Yrend.material.color = Color.red;
-			//Y.SetActive (false);
 			XYZW = true;
 			Zrend.material.color = Color.green;
-			//Z.SetActive (true);
 		}
 
 		rotR = OVRInput.GetLocalControllerRotation (RightHand);
