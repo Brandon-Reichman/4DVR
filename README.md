@@ -31,7 +31,16 @@ The user can apply arbitrary rotations in a pair of orthogonal planes
 
 The control scheme is as follows:
 
-(TODO: Document controls)
+A Button: Cycles through planes of rotation.
+B Button: Resets objects orientation.
+X Button: Switches to orthographic projection.
+Y Button: Switches to stereographic projection.
+Left Menu Button: Quits application.
+Right Menu Button: Open Oculus menu.
+Left/Right Index Trigger: Cycles through objects.
+Right Grip Trigger: Three-dimensional rotations. (Twist right wrist as if grabbing and turning a dial)
+Left Grip Trigger: Four-dimensional rotations. (Twist left wrist as if grabbing and turning a dial)
+
 
 ## Known issues
 
@@ -54,5 +63,5 @@ The control scheme is as follows:
 
 ## Development Team
 
-* Brandon Reichman (<breich5@uic.edu>)
+* Brandon Reichman (<Reichman.Brandon@gmail.com>)
 * David Dumas (<david@dumas.io>)

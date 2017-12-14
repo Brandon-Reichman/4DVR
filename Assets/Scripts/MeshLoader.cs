@@ -223,9 +223,6 @@ public class MeshLoader: MonoBehaviour {
 			DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
 			Scale(LoadVerts(vertices));
 		}
-		if (OVRInput.GetDown (OVRInput.Button.Start))
-			Application.Quit ();
 	}
-
 }
 
