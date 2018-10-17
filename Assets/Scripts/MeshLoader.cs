@@ -169,15 +169,15 @@ public class MeshLoader: MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (OVRInput.GetDown (OVRInput.RawButton.X))
+		if (Input.GetKeyDown(KeyCode.Z))
 			OBJ.GetComponent<MeshRenderer> ().material = Orthographic;
-		if (OVRInput.GetDown (OVRInput.RawButton.Y))
+		if (Input.GetKeyDown(KeyCode.X))
 			OBJ.GetComponent<MeshRenderer> ().material = Stereographic;
 
-		if (OVRInput.GetDown (OVRInput.RawButton.Y)&&P==4)
+		if (Input.GetKeyDown(KeyCode.X) && P==4)
 			OBJ.GetComponent<MeshRenderer> ().material = Orthographic;
 		
-		if (OVRInput.GetDown (OVRInput.RawButton.RIndexTrigger)) {
+		if (Input.GetKeyDown(KeyCode.Tab)) {
 			Destroy (OBJ);
 			P++;
 			if (P > 4)
@@ -200,7 +200,7 @@ public class MeshLoader: MonoBehaviour {
 			DrawObject (Orthographic, LoadVerts (vertices), LoadTans (vertices), Flatten (triangles));
 			Scale(LoadVerts(vertices));
 		}
-		if (OVRInput.GetDown (OVRInput.RawButton.LIndexTrigger)) {
+		if (Input.GetKeyDown(KeyCode.Backslash)) {
 			Destroy (OBJ);
 			P--;
 			if (P < 0)
