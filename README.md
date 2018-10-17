@@ -27,27 +27,35 @@ parser).
 The user can apply arbitrary rotations in a pair of orthogonal planes
 (e.g. XY and ZW) using the hand controllers.
 
-## Documentation
+## Controls
 
 The control scheme is as follows:
 
-A Button: Cycles through planes of rotation.
+Escape: Quit application.
 
-B Button: Resets objects orientation.
+WASD or Arrow Keys: Move and rotate camera.
 
-X Button: Switches to orthographic projection.
+Spacebar: Move camera up.
 
-Y Button: Switches to stereographic projection.
+Left Control: Move camera down.
 
-Left Menu Button: Quits application.
+Shift: Cycles through planes of rotation.
 
-Right Menu Button: Open Oculus menu.
+Tab & Backslash: Cycle through objects.
 
-Left/Right Index Trigger: Cycles through objects.
+Z: Switches to orthographic projection.
 
-Right Grip Trigger: Three-dimensional rotations. (Twist right wrist as if grabbing and turning a dial)
+X: Switches to stereographic projection.
 
-Left Grip Trigger: Four-dimensional rotations. (Twist left wrist as if grabbing and turning a dial)
+Middle-Click: Resets object orientation.
+
+### Rotations
+
+To rotate the object, click and hold either mouse button, depending on rotation desired. Where initially clicked will define the origin point. Draw circles around the origin point. The difference in the angle drawn around the origion will be the angle the object is rotated on the selected plane.
+
+Left-Click: Four-dimensional rotations.
+
+Right-Click: Three-dimentional rotations.
 
 
 ## Known issues
@@ -59,6 +67,8 @@ Left Grip Trigger: Four-dimensional rotations. (Twist left wrist as if grabbing 
 * The two sides of each triangle in the 4D object's mesh are shaded
   slightly differently, resulting in an apparent "seam" in the
   non-orientable surfaces.
+
+* Need to add visualization for rotating object with mouse controls.
 
 * The control scheme is not documented in a way that can be accessed
   from within the VR experience.
