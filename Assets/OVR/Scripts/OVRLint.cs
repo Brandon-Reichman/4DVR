@@ -255,9 +255,9 @@ public static class OVRLint
 			EditorUtility.DisplayDialog("Optimize MSAA?", "Multisample antialiasing level " + OVRManager.display.recommendedMSAALevel + " is recommended for optimal quality and performance.", "Use recommended", "Skip"))
 			QualitySettings.antiAliasing = OVRManager.display.recommendedMSAALevel;
 
-		if (UnityEngine.XR.XRSettings.eyeTextureResolutionScale > 1.5 &&
+		if (UnityEngine.VR.VRSettings.renderScale > 1.5 &&
 			EditorUtility.DisplayDialog ("Optimize Render Scale?", "For CPU performance, please don't use render scale over 1.5.", "Use recommended", "Skip"))
-			UnityEngine.XR.XRSettings.eyeTextureResolutionScale = 1.5f;
+			UnityEngine.VR.VRSettings.renderScale = 1.5f;
 	}
 
 	static void CheckStaticAndroidIssues ()
