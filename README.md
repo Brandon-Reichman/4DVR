@@ -71,5 +71,5 @@ Left Grip Trigger: Four-dimensional rotations. (Twist left wrist as if grabbing 
 
 ## Development Team
 
-* Brandon Reichman (<Reichman.Brandon@gmail.com>)
-* David Dumas (<david@dumas.io>)
+* Brandon Reichman
+* Emily Dumas
